@@ -1,9 +1,11 @@
 set -e
 
 myDir="~/Desktop/work-dir/"
+echo $myDir
 if [ ! -d "$myDir" ]; then
 	mkdir ~/Desktop/work-dir/
 fi
+
 
 cd ~/Desktop/work-dir
 
