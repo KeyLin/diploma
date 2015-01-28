@@ -3,9 +3,15 @@ cd ~/Desktop
 apt-get install -y python2.7-dev
 apt-get install -y python-pip
 apt-get install -y speex
-pip install pyrex --allow-all-external --allow-unverified pyrex
-pip install pyaudio --allow-all-external --allow-unverified pyaudio
-#ldconfig
+pip install pyrex
+
+myFile0="./pa_stable_v19_20140130.tgz"
+if [ ! -f "$myFile0"]; then
+wget http://www.portaudio.com/archives/pa_stable_v19_20140130.tgz
+fi
+
+pip install pyaudio
+
 echo "installing pySpeex"
 
 myFile1="./speex-1.2rc2.tar.gz"
