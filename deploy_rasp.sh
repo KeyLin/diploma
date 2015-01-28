@@ -1,36 +1,40 @@
 set -e
-mkdir ~/Desktop/work-dir
+myDir="~/Desktop/work-dir"
+if [ ! -d "$myDir"]; then
+	mkdir ~/Desktop/work-dir
+fi
+
 cd ~/Desktop/work-dir
 
-dpkg -l | grep speex
+dpkg -l | grep speex  > /dev/null
 if [ $? -eq 0 ]; then
 	echo "python2.7-dev already exit"
 else
 	apt-get install -y python2.7-dev
 fi
 
-dpkg -l | grep speex
+dpkg -l | grep speex  > /dev/null
 if [ $? -eq 0 ]; then
 	echo "python-pip already exit"
 else
 	apt-get install -y python-pip
 fi
 
-dpkg -l | grep speex
+dpkg -l | grep speex  > /dev/null
 if [ $? -eq 0 ]; then
 	echo "speex already exit"
 else
 	apt-get install -y speex
 fi
 
-pip freeze pyrex
+pip freeze | grep Pyrex  > /dev/null
 if [ $? -eq 0 ]; then
 	echo "pyrex already exit"
 else
 	pip install pyrex
 fi
 
-pkg-config portaudio-2.0.pc
+pkg-config portaudio-2.0.pc  > /dev/null
 if [ $? -eq 0 ]; then
     myFile0="./pa_stable_v19_20140130.tgz"
     if [ ! -f "$myFile0" ]; then
