@@ -34,8 +34,8 @@ else
 	pip install pyrex
 fi
 
-pkg-config portaudio-2.0.pc  > /dev/null
-if [ $? -eq 0 ]; then
+pkg-config --list-all | grep portaudio > /dev/null
+if [ $? -eq 1 ]; then
     myFile0="./pa_stable_v19_20140130.tgz"
     if [ ! -f "$myFile0" ]; then
     	wget http://www.portaudio.com/archives/pa_stable_v19_20140130.tgz
