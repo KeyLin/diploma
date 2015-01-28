@@ -1,6 +1,6 @@
 set -e
 
-myDir="~/Desktop/work-dir"
+myDir="~/Desktop/work-dir/"
 if [ ! -d "$myDir" ]; then
 	mkdir "$myDir"
 fi
