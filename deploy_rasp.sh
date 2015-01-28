@@ -59,7 +59,8 @@ if [ ! -f "$myFile2" ]; then
 	tar -xzvf pySpeex-0.2.tar.gz -C ./speex-1.2rc2/
 fi 
 
-python ./speex-1.2rc2/pySpeex-0.2/setup.py build
-python ./speex-1.2rc2/pySpeex-0.2/setup.py install
+cd /speex-1.2rc2/pySpeex-0.2/
+python setup.py install
+cd ~/Desktop/work-dir
 
 echo "Deploy Successed"
