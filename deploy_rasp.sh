@@ -56,7 +56,9 @@ fi
 myFile2="./pySpeex-0.2.tar.gz"
 if [ ! -f "$myFile2" ]; then  
 	wget http://freenet.mcnabhosting.com/python/pySpeex/pySpeex-0.2.tar.gz
-	tar -xzf pySpeex-0.2.tar.gz -C ./speex*/
+	tar -xzf pySpeex-0.2.tar.gz -C ./speex-1.2rc2/
 fi 
 
-python ./speex*/pySpeex*/setup.py install
+python ./speex-1.2rc2/pySpeex-0.2/setup.py install
+
+echo "Deploy Successed"
