@@ -1,7 +1,6 @@
 set -e
 
 myDir="../work-dir/"
-echo $myDir
 if [ ! -d "$myDir" ]; then
 	mkdir "$myDir"
 fi
@@ -61,8 +60,8 @@ if [ ! -f "$myFile2" ]; then
 	tar -xzvf pySpeex-0.2.tar.gz -C ./speex-1.2rc2/
 fi 
 
-cd /speex-1.2rc2/pySpeex-0.2/
+cd ./speex-1.2rc2/pySpeex-0.2/
 python setup.py install
-cd ~/Desktop/work-dir
+cd "$myDir"
 
 echo "Deploy Successed"
