@@ -1,8 +1,9 @@
 set -e
-#myDir="~/Desktop/work-dir"
-#if [ ! -d "$myDir"]; then
-	#mkdir "$myDir"
-#fi
+
+myDir="~/Desktop/work-dir"
+if [ ! -d "$myDir"]; then
+	mkdir "$myDir"
+fi
 
 cd ~/Desktop/work-dir
 
