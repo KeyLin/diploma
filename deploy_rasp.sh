@@ -1,8 +1,8 @@
 set -e
-myDir="~/Desktop/work-dir"
-if [ ! -d "$myDir"]; then
-	mkdir ~/Desktop/work-dir
-fi
+#myDir="~/Desktop/work-dir"
+#if [ ! -d "$myDir"]; then
+	#mkdir "$myDir"
+#fi
 
 cd ~/Desktop/work-dir
 
@@ -42,6 +42,7 @@ if [ $? -eq 0 ]; then
     fi
     tar -xzf pa_stable_v19_20140130.tgz -C
     ./portaudio/configure&&make clean&&make&&make install
+else echo "portaudio already exit "
 fi
 
 pip install pyaudio
