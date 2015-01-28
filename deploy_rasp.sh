@@ -2,7 +2,7 @@ set -e
 
 myDir="~/Desktop/work-dir/"
 if [ ! -d "$myDir" ]; then
-	mkdir "$myDir"
+	mkdir ~/Desktop/work-dir/
 fi
 
 cd ~/Desktop/work-dir
