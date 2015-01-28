@@ -2,21 +2,21 @@ set -e
 mkdir ~/Desktop/work-dir
 cd ~/Desktop/work-dir
 
-dpkg -L | grep speex
+dpkg -l | grep speex
 if [ $? -eq 0 ]; then
 	echo "python2.7-dev already exit"
 else
 	apt-get install -y python2.7-dev
 fi
 
-dpkg -L | grep speex
+dpkg -l | grep speex
 if [ $? -eq 0 ]; then
 	echo "python-pip already exit"
 else
 	apt-get install -y python-pip
 fi
 
-dpkg -L | grep speex
+dpkg -l | grep speex
 if [ $? -eq 0 ]; then
 	echo "speex already exit"
 else
