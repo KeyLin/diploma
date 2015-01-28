@@ -7,14 +7,16 @@ fi
 
 cd "$myDir"
 
-dpkg -l | grep speex  > /dev/null
+apt-get install -y libogg-dev
+
+dpkg -l | grep python2.7-dev  > /dev/null
 if [ $? -eq 0 ]; then
 	echo "python2.7-dev already exit"
 else
 	apt-get install -y python2.7-dev
 fi
 
-dpkg -l | grep speex  > /dev/null
+dpkg -l | grep python-pip  > /dev/null
 if [ $? -eq 0 ]; then
 	echo "python-pip already exit"
 else
@@ -50,8 +52,8 @@ pip install pyaudio
 
 myFile1="./speex-1.2rc2.tar.gz"
 if [ ! -f "$myFile1" ]; then  
-	wget http://downloads.xiph.org/releases/speex/speex-1.2rc2.tar.gz
-	tar -xzvf speex-1.2rc2.tar.gz  
+	wget http://downloads.xiph.org/releases/speex/speex-1.2rc1.tar.gz
+	tar -xzvf speex-1.2rc1.tar.gz  
 fi
 
 myFile2="./pySpeex-0.2.tar.gz"
@@ -60,7 +62,7 @@ if [ ! -f "$myFile2" ]; then
 	tar -xzvf pySpeex-0.2.tar.gz -C ./speex-1.2rc2/
 fi 
 
-cd ./speex-1.2rc2/pySpeex-0.2/
+cd ./speex-1.2rc1/pySpeex-0.2/
 python setup.py install
 cd "$myDir"
 
