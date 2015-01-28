@@ -1,12 +1,12 @@
 set -e
 
-myDir="/root/Desktop/work-dir/"
+myDir="../work-dir/"
 echo $myDir
 if [ ! -d "$myDir" ]; then
 	mkdir "$myDir"
 fi
 
-cd ~/Desktop/work-dir
+cd "$myDir"
 
 dpkg -l | grep speex  > /dev/null
 if [ $? -eq 0 ]; then
