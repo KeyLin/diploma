@@ -48,7 +48,13 @@ if [ $? -eq 1 ]; then
 else echo "portaudio already exit "
 fi
 
-pip install pyaudio
+pip freeze | grep pyaudio  > /dev/null
+if [ $? -eq 0 ]; then
+	echo "pyaudio already exit"
+else
+	pip install pyaudio
+fi
+
 
 myFile1="./speex-1.2rc2.tar.gz"
 if [ ! -f "$myFile1" ]; then  
@@ -56,14 +62,13 @@ if [ ! -f "$myFile1" ]; then
 	tar -xzvf speex-1.2rc1.tar.gz  
 fi
 
-myFile2="./pySpeex-0.2.tar.gz"
-if [ ! -f "$myFile2" ]; then  
-	wget http://freenet.mcnabhosting.com/python/pySpeex/pySpeex-0.2.tar.gz
-	tar -xzvf pySpeex-0.2.tar.gz -C ./speex-1.2rc2/
-fi 
-
-cd ./speex-1.2rc1/pySpeex-0.2/
-python setup.py install
-cd "$myDir"
+#myFile2="./pySpeex-0.2.tar.gz"
+#if [ ! -f "$myFile2" ]; then  
+#	wget http://freenet.mcnabhosting.com/python/pySpeex/pySpeex-0.2.tar.gz
+#	tar -xzvf pySpeex-0.2.tar.gz -C ./speex-1.2rc2/
+#fi 
+#cd ./speex-1.2rc1/pySpeex-0.2/
+#python setup.py install
+#cd "$myDir"
 
 echo "Deploy Successed"
