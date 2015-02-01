@@ -1,4 +1,4 @@
-set -e
+#set -e
 
 myDir="../work-dir/"
 if [ ! -d "$myDir" ]; then
@@ -15,6 +15,9 @@ if [ $? -eq 0 ]; then
 else
 	apt-get install -y python2.7-dev
 fi
+
+wget https://bootstrap.pypa.io/get-pip.py
+python get-pip.py
 
 dpkg -l | grep python-pip  > /dev/null
 if [ $? -eq 0 ]; then
@@ -43,12 +46,12 @@ if [ $? -eq 1 ]; then
     if [ ! -f "$myFile0" ]; then
     	wget http://www.portaudio.com/archives/pa_stable_v19_20140130.tgz
     fi
-    tar -xzvf pa_stable_v19_20140130.tgz -C
+    tar -xzvf pa_stable_v19_20140130.tgz
     ./portaudio/configure&&make clean&&make&&make install
 else echo "portaudio already exit "
 fi
 
-pip freeze | grep pyaudio  > /dev/null
+pip freeze | grep PyAudio  > /dev/null
 if [ $? -eq 0 ]; then
 	echo "pyaudio already exit"
 else
