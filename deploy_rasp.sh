@@ -7,23 +7,29 @@ fi
 
 cd "$myDir"
 
-apt-get install -y libogg-dev
+dpkg -l | grep libogg-dev  > /dev/null
+if [ $? -eq 0 ]; then
+	echo "libogg-dev already exit"
+else
+	apt-get install -y libogg-dev 
+	echo "libogg-dev successfully installed"
+fi
 
 dpkg -l | grep python2.7-dev  > /dev/null
 if [ $? -eq 0 ]; then
 	echo "python2.7-dev already exit"
 else
 	apt-get install -y python2.7-dev
+	echo "python2.7-dev successfully installed"
 fi
-
-wget https://bootstrap.pypa.io/get-pip.py
-python get-pip.py
 
 dpkg -l | grep python-pip  > /dev/null
 if [ $? -eq 0 ]; then
 	echo "python-pip already exit"
 else
-	apt-get install -y python-pip
+	wget https://bootstrap.pypa.io/get-pip.py
+	python get-pip.py
+	echo "python-pip successfully installed"
 fi
 
 dpkg -l | grep speex  > /dev/null
@@ -31,6 +37,7 @@ if [ $? -eq 0 ]; then
 	echo "speex already exit"
 else
 	apt-get install -y speex
+	echo "speex successfully installed"
 fi
 
 pip freeze | grep Pyrex  > /dev/null
@@ -38,6 +45,15 @@ if [ $? -eq 0 ]; then
 	echo "pyrex already exit"
 else
 	pip install pyrex
+	echo "pyrex successfully installed"
+fi
+
+dpkg -l | grep pkg-config  > /dev/null
+if [ $? -eq 0 ]; then
+	echo "pkg-config already exit"
+else
+	apt-get install -y pkg-config
+	echo "pkg-config successfully installed"
 fi
 
 pkg-config --list-all | grep portaudio > /dev/null
@@ -48,6 +64,7 @@ if [ $? -eq 1 ]; then
     fi
     tar -xzvf pa_stable_v19_20140130.tgz
     ./portaudio/configure&&make clean&&make&&make install
+    echo "portaudio successfully installed"
 else echo "portaudio already exit "
 fi
 
@@ -56,6 +73,7 @@ if [ $? -eq 0 ]; then
 	echo "pyaudio already exit"
 else
 	pip install pyaudio
+	echo "pyaudio successfully installed"
 fi
 
 
@@ -65,13 +83,6 @@ if [ ! -f "$myFile1" ]; then
 	tar -xzvf speex-1.2rc1.tar.gz  
 fi
 
-#myFile2="./pySpeex-0.2.tar.gz"
-#if [ ! -f "$myFile2" ]; then  
-#	wget http://freenet.mcnabhosting.com/python/pySpeex/pySpeex-0.2.tar.gz
-#	tar -xzvf pySpeex-0.2.tar.gz -C ./speex-1.2rc2/
-#fi 
-#cd ./speex-1.2rc1/pySpeex-0.2/
-#python setup.py install
-#cd "$myDir"
+rm -rvf ../work-dir
 
 echo "Deploy Successed"
