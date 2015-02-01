@@ -85,4 +85,4 @@ fi
 
 rm -rvf ../work-dir
 
-echo "Deploy Successed"
+echo "Successfully deployed"
