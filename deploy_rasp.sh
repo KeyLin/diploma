@@ -39,6 +39,7 @@ else
 	apt-get install -y speex
 	echo "speex successfully installed"
 fi
+apt-get install libspeex-dev
 
 pip freeze | grep Pyrex  > /dev/null
 if [ $? -eq 0 ]; then
