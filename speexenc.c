@@ -7,6 +7,7 @@ int main(int argc, char **argv)
 {
    char *inFile;
    FILE *fin;
+   FILE *fout;
    short in[FRAME_SIZE];
    float input[FRAME_SIZE];
    char cbits[200];
@@ -26,7 +27,8 @@ int main(int argc, char **argv)
 
    inFile = argv[1];
    fin = fopen(inFile, "r");
-
+   fout = fopen("Yamaha.spe","w+");
+   
    /*Initialization of the structure that holds the bits*/
    speex_bits_init(&bits);
    while (1)
@@ -51,7 +53,7 @@ int main(int argc, char **argv)
        it's likely to be different in your own application*/
       fwrite(&nbBytes, sizeof(int), 1, stdout);
       /*Write the compressed data*/
-      fwrite(cbits, 1, nbBytes, stdout);
+      fwrite(cbits, 1, nbBytes, fout);
       
    }
    
@@ -59,6 +61,7 @@ int main(int argc, char **argv)
    speex_encoder_destroy(state);
    /*Destroy the bit-packing struct*/
    speex_bits_destroy(&bits);
+   fclose(fout);
    fclose(fin);
    return 0;
 }
