@@ -6,6 +6,7 @@
 int main(int argc, char **argv)
 {
    char *inFile;
+   char *outFile;
    FILE *fin;
    FILE *fout;
    short in[FRAME_SIZE];
@@ -26,8 +27,9 @@ int main(int argc, char **argv)
    speex_encoder_ctl(state, SPEEX_SET_QUALITY, &tmp);
 
    inFile = argv[1];
+   outFile = argv[2];
    fin = fopen(inFile, "r");
-   fout = fopen("Yamaha.spe","w+");
+   fout = fopen(outFile,"w+");
    
    /*Initialization of the structure that holds the bits*/
    speex_bits_init(&bits);
