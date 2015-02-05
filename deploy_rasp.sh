@@ -23,7 +23,7 @@ else
 	echo "python2.7-dev successfully installed"
 fi
 
-dpkg -l | grep python-pip  > /dev/null
+whatis pip  > /dev/null
 if [ $? -eq 0 ]; then
 	echo "python-pip already exit"
 else
@@ -39,7 +39,14 @@ else
 	apt-get install -y speex
 	echo "speex successfully installed"
 fi
-apt-get install libspeex-dev
+
+dpkg -l | grep libspeex-dev > /dev/null
+if[ $? -eq 0 ]; then
+        echo "libspeex-dev already exit"
+else
+        apt-get install libspeex-dev
+        echo "libspeex successfully installed"
+fi
 
 pip freeze | grep Pyrex  > /dev/null
 if [ $? -eq 0 ]; then
