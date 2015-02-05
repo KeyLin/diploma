@@ -53,7 +53,7 @@ int main(int argc, char **argv)
 
       /*Write the size of the frame first. This is what sampledec expects but
        it's likely to be different in your own application*/
-      fwrite(&nbBytes, sizeof(int), 1, stdout);
+      fwrite(&nbBytes, sizeof(int), 1, fout);
       /*Write the compressed data*/
       fwrite(cbits, 1, nbBytes, fout);
       
