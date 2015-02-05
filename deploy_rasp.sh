@@ -41,8 +41,8 @@ else
 fi
 
 dpkg -l | grep libspeex-dev > /dev/null
-if[ $? -eq 0 ]; then
-	echo "libspeex-dev already exit"
+if [ $? -eq 0 ]; then
+	echo "libspeex already exit"
 else
 	apt-get install libspeex-dev
 	echo "libspeex successfully installed"
