@@ -42,10 +42,10 @@ fi
 
 dpkg -l | grep libspeex-dev > /dev/null
 if[ $? -eq 0 ]; then
-        echo "libspeex-dev already exit"
+	echo "libspeex-dev already exit"
 else
-        apt-get install libspeex-dev
-        echo "libspeex successfully installed"
+    apt-get install libspeex-dev
+    echo "libspeex successfully installed"
 fi
 
 pip freeze | grep Pyrex  > /dev/null
