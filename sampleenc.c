@@ -6,9 +6,7 @@
 int main(int argc, char **argv)
 {
    char *inFile;
-   char *outFile;
    FILE *fin;
-   FILE *fout;
    short in[FRAME_SIZE];
    float input[FRAME_SIZE];
    char cbits[200];
@@ -27,10 +25,8 @@ int main(int argc, char **argv)
    speex_encoder_ctl(state, SPEEX_SET_QUALITY, &tmp);
 
    inFile = argv[1];
-   outFile = argv[2];
    fin = fopen(inFile, "r");
-   fout = fopen(outFile,"w+");
-   
+
    /*Initialization of the structure that holds the bits*/
    speex_bits_init(&bits);
    while (1)
@@ -53,9 +49,9 @@ int main(int argc, char **argv)
 
       /*Write the size of the frame first. This is what sampledec expects but
        it's likely to be different in your own application*/
-      //fwrite(&nbBytes, sizeof(int), 1, fout);
+      fwrite(&nbBytes, sizeof(int), 1, stdout);
       /*Write the compressed data*/
-      fwrite(cbits, 1, nbBytes, fout);
+      fwrite(cbits, 1, nbBytes, stdout);
       
    }
    
@@ -63,7 +59,6 @@ int main(int argc, char **argv)
    speex_encoder_destroy(state);
    /*Destroy the bit-packing struct*/
    speex_bits_destroy(&bits);
-   fclose(fout);
    fclose(fin);
    return 0;
 }
