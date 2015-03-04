@@ -39,6 +39,7 @@ int main(int argc, char **argv)
    while (1)
    {
       fread(&nbBytes, sizeof(int), 1, fin);
+      fprintf (stderr, "nbBytes: %d\n", nbBytes);
       if (feof(fin))
          break;
       /*Read the size encoded by sampleenc, this part will likely be 
