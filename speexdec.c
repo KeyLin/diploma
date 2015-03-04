@@ -7,6 +7,7 @@ int main(int argc, char **argv)
 {
    char *outFile;
    FILE *fout;
+   FILE *fin
    /*Holds the audio that will be written to file (16 bits per sample)*/
    short out[FRAME_SIZE];
    /*Speex handle samples as float, so we need an array of floats*/
@@ -33,15 +34,19 @@ int main(int argc, char **argv)
    speex_bits_init(&bits);
    while (1)
    {
+      fread(in, sizeof(short), FRAME_SIZE, fin);
+      if (feof(fin))
+         break;
       /*Read the size encoded by sampleenc, this part will likely be 
         different in your application*/
-      fread(&nbBytes, sizeof(int), 1, stdin);
-      fprintf (stderr, "nbBytes: %d\n", nbBytes);
-      if (feof(stdin))
-         break;
+      // fread(&nbBytes, sizeof(int), 1, stdin);
+      // fprintf (stderr, "nbBytes: %d\n", nbBytes);
+      // if (feof(stdin))
+      //    break;
       
       /*Read the "packet" encoded by sampleenc*/
-      fread(cbits, 1, nbBytes, stdin);
+      fread(cbits, 1, nbBytes, fin);
+      //fread(cbits, 1, nbBytes, stdin);
       /*Copy the data into the bit-stream struct*/
       speex_bits_read_from(&bits, cbits, nbBytes);
 
