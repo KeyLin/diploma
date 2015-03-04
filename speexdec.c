@@ -38,7 +38,7 @@ int main(int argc, char **argv)
    speex_bits_init(&bits);
    while (1)
    {
-      fread(in, sizeof(int), FRAME_SIZE, fin);
+      fread(&nbBytes, sizeof(int), 1, fin);
       if (feof(fin))
          break;
       /*Read the size encoded by sampleenc, this part will likely be 
