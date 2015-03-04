@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 /*The frame size in hardcoded for this sample code but it doesn't have to be*/
-#define FRAME_SIZE 160
+#define FRAME_SIZE 80
 int main(int argc, char **argv)
 {
    char *outFile;
@@ -11,7 +11,7 @@ int main(int argc, char **argv)
    short out[FRAME_SIZE];
    /*Speex handle samples as float, so we need an array of floats*/
    float output[FRAME_SIZE];
-   char cbits[200];
+   char cbits[100];
    int nbBytes;
    /*Holds the state of the decoder*/
    void *state;

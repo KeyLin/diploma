@@ -2,14 +2,14 @@
 #include <stdio.h>
 
 /*The frame size in hardcoded for this sample code but it doesn't have to be*/
-#define FRAME_SIZE 160
+#define FRAME_SIZE 80
 int main(int argc, char **argv)
 {
    char *inFile;
    FILE *fin;
    short in[FRAME_SIZE];
    float input[FRAME_SIZE];
-   char cbits[200];
+   char cbits[100];
    int nbBytes;
    /*Holds the state of the encoder*/
    void *state;
@@ -32,7 +32,7 @@ int main(int argc, char **argv)
    while (1)
    {
       /*Read a 16 bits/sample audio frame*/
-      fread(in, sizeof(short), FRAME_SIZE, fin);
+      fread(in, sizeof(char), FRAME_SIZE, fin);
       if (feof(fin))
          break;
       /*Copy the 16 bits values to float so Speex can work on them*/
@@ -45,7 +45,7 @@ int main(int argc, char **argv)
       /*Encode the frame*/
       speex_encode(state, input, &bits);
       /*Copy the bits to an array of char that can be written*/
-      nbBytes = speex_bits_write(&bits, cbits, 200);
+      nbBytes = speex_bits_write(&bits, cbits, 100);
 
       /*Write the size of the frame first. This is what sampledec expects but
        it's likely to be different in your own application*/

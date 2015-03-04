@@ -5,13 +5,15 @@
 #define FRAME_SIZE 160
 int main(int argc, char **argv)
 {
+   char *inFile;
    char *outFile;
    FILE *fout;
-   FILE *fin
+   FILE *fin;
    /*Holds the audio that will be written to file (16 bits per sample)*/
    short out[FRAME_SIZE];
    /*Speex handle samples as float, so we need an array of floats*/
    float output[FRAME_SIZE];
+   short in[FRAME_SIZE];
    char cbits[200];
    int nbBytes;
    /*Holds the state of the decoder*/
@@ -27,14 +29,16 @@ int main(int argc, char **argv)
    tmp=1;
    speex_decoder_ctl(state, SPEEX_SET_ENH, &tmp);
 
-   outFile = argv[1];
+   inFile = argv[1];
+   outFile = argv[2];
+   fin = fopen(inFile, "r");
    fout = fopen(outFile, "w");
 
    /*Initialization of the structure that holds the bits*/
    speex_bits_init(&bits);
    while (1)
    {
-      fread(in, sizeof(short), FRAME_SIZE, fin);
+      fread(in, sizeof(int), FRAME_SIZE, fin);
       if (feof(fin))
          break;
       /*Read the size encoded by sampleenc, this part will likely be 
@@ -66,5 +70,6 @@ int main(int argc, char **argv)
    /*Destroy the bit-stream truct*/
    speex_bits_destroy(&bits);
    fclose(fout);
+   fclose(fin);
    return 0;
 }
