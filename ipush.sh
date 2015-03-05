@@ -5,7 +5,6 @@ echo $1
 if [ "$1" = "" ]; then
 	git commit -m 'default'
 else
-	str="$1"
-	git commit -m "$str"
+	git commit -m "$1"
 fi
 git push
