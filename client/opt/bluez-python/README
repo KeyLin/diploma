@@ -1,0 +1,34 @@
+bluez-python - A BlueZ python binding on top of dbus-python
+
+
+Requirements
+==============================
+
+In order to use bluez-python you need following software packages:
+    - Python 2.5 or later
+    - Linux Bluetooth protocol stack (BlueZ)
+    - Python bindings for D-Bus (dbus-python)
+
+
+Installation
+==============================
+
+From a command shell:
+
+# python setup.py install
+
+
+Notes
+==============================
+
+    - Only supports BlueZ4 API
+    - Checking the doc directory in the BlueZ source package is always a good idea.
+
+
+Contact
+==============================
+
+Li Dongyang <Jerry87905@gmail.com>
+
+For additional information, check the page on the BlueZ wiki:
+    http://wiki.bluez.org/wiki/bluez-python
