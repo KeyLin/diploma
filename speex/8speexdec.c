@@ -42,12 +42,6 @@ int main(int argc, char **argv)
       fprintf (stderr, "nbBytes: %d\n", nbBytes);
       if (feof(fin))
          break;
-      /*Read the size encoded by sampleenc, this part will likely be 
-        different in your application*/
-      // fread(&nbBytes, sizeof(int), 1, stdin);
-      // fprintf (stderr, "nbBytes: %d\n", nbBytes);
-      // if (feof(stdin))
-      //    break;
       
       /*Read the "packet" encoded by sampleenc*/
       fread(cbits, 1, nbBytes, fin);
