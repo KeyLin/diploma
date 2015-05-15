@@ -1,5 +1,5 @@
-gcc 8speexenc.c -g -lspeex -o 8enc
-gcc 8speexdec.c -g -lspeex -o 8dec
+#gcc 8speexenc.c -g -lspeex -o 8enc.exe
+#gcc 8speexdec.c -g -lspeex -o 8dec.exe
 
-gcc speexenc.c -g -lspeex -o 16enc
-gcc speexdec.c -g -lspeex -o 16dec
+gcc speexenc.c -g -lspeex -o 16enc.exe
+gcc speexdec.c -g -lspeex -o 16dec.exe

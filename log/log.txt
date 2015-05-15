@@ -1,0 +1,17 @@
+wav: 打开百度，
+pcm: 打开百度，
+opus: err_no:3301
+err_msg:recognition error.
+sn:967317852451430834057
+speex: err_no:3301
+err_msg:recognition error.
+sn:253971329961430834058
+
+wav: {"corpus_no":"6145401045575713901","err_msg":"success.","err_no":0,"result":["打开百度，"],"sn":"77099403001430837680"}
+
+pcm: {"corpus_no":"6145401046438767846","err_msg":"success.","err_no":0,"result":["打开百度，"],"sn":"276296308021430837681"}
+
+opus: {"err_msg":"recognition error.","err_no":3301,"sn":"344818264941430837682"}
+
+speex: {"err_msg":"recognition error.","err_no":3301,"sn":"425988770551430837683"}
+

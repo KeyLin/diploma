@@ -36,7 +36,7 @@ int main(int argc, char **argv)
       /*Read the size encoded by sampleenc, this part will likely be 
         different in your application*/
       fread(&nbBytes, sizeof(int), 1, stdin);
-      fprintf (stderr, "nbBytes: %d\n", nbBytes);
+      //fprintf (stderr, "nbBytes: %d\n", nbBytes);
       if (feof(stdin))
          break;
       
