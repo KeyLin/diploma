@@ -1,0 +1,7 @@
+venv/
+*.exe
+.idea/
+.DS_store
+*.pyc
+sphinx_install/*
+model/*

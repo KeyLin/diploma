@@ -74,12 +74,12 @@ class RecordAndPlay(object):
 
 if __name__ == "__main__":
 	if len(sys.argv) < 3:
-		print("Record a wave file.\n\nUsage: %s -r filename.wav" % sys.argv[0])
+		print("Record a wave file.\n\nUsage: %s -r filename.wav -t time" % sys.argv[0])
 		print("Plays a wave file.\n\nUsage: %s -p filename.wav" % sys.argv[0])
 		sys.exit(-1)
 	test = RecordAndPlay()
 	if sys.argv[1] == '-r':
-		test.record_wav(WAVE_OUTPUT_FILENAME=sys.argv[2],RECORD_SECONDS=5)
+		test.record_wav(WAVE_OUTPUT_FILENAME=sys.argv[2],RECORD_SECONDS=int(sys.argv[4]))
 	if sys.argv[1] == '-p':
 		test.play_wav(audio_file=sys.argv[2])
 

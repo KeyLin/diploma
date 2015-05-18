@@ -20,7 +20,7 @@ package[5]=pkg-config
 package[6]=libportaudio2
 package[7]=portaudio19-dev
 package[8]=python-pyaudio
-#package[9]=bluez-alsa
+package[9]=rabbitmq-server
 
 #module[0]=PyAudio
 module[0]=Pyrex
