@@ -26,6 +26,7 @@ package[9]=rabbitmq-server
 module[0]=Pyrex
 module[1]=requests
 module[2]=jieba
+module[3]=pika
 
 function PackageInstall()
 {
