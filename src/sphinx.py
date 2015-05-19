@@ -14,8 +14,8 @@ from sphinxbase import *
 
 from save_file import SaveFile
 
-import locale
-locale.setlocale(locale.LC_ALL, '')    # set your locale
+#import locale
+#locale.setlocale(locale.LC_ALL, '')    # set your locale
 
 ERROR_HANDLER_FUNC = CFUNCTYPE(
     None, c_char_p, c_int, c_char_p, c_int, c_char_p)
