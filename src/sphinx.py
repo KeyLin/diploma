@@ -49,8 +49,11 @@ class Pocket(object):
         self.result = ["hehe"]
         #print type(self.result)
 
-    def get_flag(self):
-        return self.result
+    def get_flag(self,flag = 'yes'):
+        if flag in self.result:
+            return True
+        else:
+            return False
 
     def set_flag(self):
         self.result = ["hehe"]
@@ -61,8 +64,8 @@ class Pocket(object):
         try:
             #If the decoder has partial results, display them in the screen.
             if  self.decoder.hyp().hypstr != '':
-                hypstr = self.decoder.hyp().hypstr
-                #print('Partial decoding result: '+ hypstr)
+                result = self.decoder.hyp().hypstr
+                #print('Partial decoding result: '+ result)
         except AttributeError:
             pass
         if self.decoder.get_in_speech():

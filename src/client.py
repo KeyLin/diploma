@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 import pika
 import sys
+import os
+from record_play import RecordAndPlay
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(
         host='localhost'))
@@ -25,7 +27,8 @@ for binding_key in binding_keys:
 print ' [*] Waiting for logs. To exit press CTRL+C'
 
 def callback(ch, method, properties, body):
-    print " [x] %r:%s" % (method.routing_key, body.decode('utf8'),)
+	os.system('aplay ./data/drmapan.wav')
+	print " [x] %r:%s" % (method.routing_key, body.decode('utf8'),)
 
 channel.basic_consume(callback,
                       queue=queue_name,

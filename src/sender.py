@@ -4,10 +4,10 @@ import pika
 
 route_dic={u'音乐':'music.',u'备忘录':'mail.'}
 
-class EmitMessage(object):
- 	"""docstring for EmitMessage"""
+class Emit(object):
+ 	"""docstring for Emit"""
  	def __init__(self, ip = 'localhost', port = 5672, EXCHANGE = 'raspberry', TYPE = 'topic'):
- 		super(EmitMessage, self).__init__()
+ 		super(Emit, self).__init__()
  		self.ip = ip
  		self.port = port
  		self.exchange = EXCHANGE
@@ -20,6 +20,7 @@ class EmitMessage(object):
  			#print route
  			if route != None:
  				return route
+ 		return 'error'
 
  	def emit_message(self,message,words):
  		#print message
@@ -36,6 +37,6 @@ class EmitMessage(object):
  		connection.close()
 
 if __name__ == '__main__':
-	test = EmitMessage()
+	test = Emit()
 	test.emit_message(u'播放音乐',[u'音乐',u'备忘录'])
 	test.emit_message(u'打开备忘录',[u'备忘录',u'音乐'])

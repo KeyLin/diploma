@@ -4,6 +4,7 @@
 from sphinx import Pocket
 from baidu_voice import BaiduVoice
 from save_file import SaveFile
+from sender import Emit
 
 from ctypes import *
 
@@ -12,6 +13,11 @@ import time
 from Queue import Queue
 import threading,signal
 import os
+import jieba
+
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 import locale
 locale.setlocale(locale.LC_ALL, '')    # set your locale
@@ -25,9 +31,10 @@ asound = cdll.LoadLibrary('libasound.so')
 # Set error handler
 asound.snd_lib_error_set_handler(c_error_handler)
 
+
 CHUNK = 1024
 RATE = 16000
-RECORD_SECONDS = 3
+RECORD_SECONDS = 5
 RECORD_CONTROL = int(RATE/CHUNK*RECORD_SECONDS)
 FILE_PATH = './data/'
 IS_REMOVE = True
@@ -54,22 +61,22 @@ class Producer(threading.Thread):
 	        buf = stream.read(CHUNK)          #Read the first Chunk from the microphone
 	        if buf:
 	            pocket.decode_buffer(audio_buf=buf)
-	            if 'yes' in pocket.get_flag():
+	            if pocket.get_flag(flag = 'yes'):
 	            	start = True
 	            	count = 0
-	            	time.sleep(0.5)
+	            	#time.sleep(0.5)
 	            	pocket.set_flag()
 
 	            if count > RECORD_CONTROL:
 	                start = False
 	                count = 0
-	                time.sleep(0.5)
+	                #time.sleep(0.5)
 	                pocket.set_flag()
 	                file_name = SaveFile.set_name()
 	                audio.save_wav(data = frames, file_path = FILE_PATH, file_name = file_name)
 	                frames = []
 	                self.data.put(file_name)
-	                print '%s: %s is producing %s to the queue!' % (time.ctime(), self.getName(), file_name)
+	                #print '%s: %s is producing %s to the queue!' % (time.ctime(), self.getName(), file_name)
 
 	            if start:
 	                frames.append(buf)
@@ -87,17 +94,24 @@ class Consumer(threading.Thread):
         threading.Thread.__init__(self,name=t_name)
         self.data=queue
         self.recognition = BaiduVoice(configure='./config/config.ini')
+        self.emit = Emit()
 
     def run(self):
     	print 'Consumer started'
     	#print IS_EXIT
         while not IS_EXIT:
+        	#self.emit.emit_message(u'音乐',[u'音乐',u'备忘录'])
         	#print 'consuming'
         	if not self.data.empty():
         		file_name = self.data.get(1,3)
 	        	print '%s: %s is consuming %s to the queue!' % (time.ctime(), self.getName(), file_name)
 	        	text = self.recognition.get_text(file_format = 'wav', audio_file = FILE_PATH+file_name)
 	        	print text
+	        	#print type(text)
+	        	#print 'emitting'
+	        	lt = list(jieba.cut(text,cut_all=False))
+	        	print type(lt)
+	        	self.emit.emit_message(text,lt)
 	        	if IS_REMOVE:
 	        	 	os.remove(FILE_PATH+file_name)
         print "%s: %s finished!" %(time.ctime(),self.getName())
