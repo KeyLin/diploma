@@ -14,13 +14,11 @@ declare -a module
 package[0]=libogg-dev
 package[1]=python2.7-dev
 package[2]=python-pip
-package[3]=speex
-package[4]=libspeex-dev
-package[5]=pkg-config
-package[6]=libportaudio2
-package[7]=portaudio19-dev
-package[8]=python-pyaudio
-package[9]=rabbitmq-server
+package[3]=pkg-config
+package[4]=portaudio19-dev
+package[5]=python-pyaudio
+package[6]=rabbitmq-server
+package[7]=libportaudio2
 
 #module[0]=PyAudio
 module[0]=Pyrex
