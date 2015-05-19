@@ -15,6 +15,7 @@ from sphinxbase import *
 from save_file import SaveFile
 
 import locale
+locale.setlocale(locale.LC_ALL, '')    # set your locale
 
 ERROR_HANDLER_FUNC = CFUNCTYPE(None, c_char_p, c_int, c_char_p, c_int, c_char_p)
 def py_error_handler(filename, line, function, err, fmt):
@@ -24,9 +25,6 @@ c_error_handler = ERROR_HANDLER_FUNC(py_error_handler)
 asound = cdll.LoadLibrary('libasound.so')
 # Set error handler
 asound.snd_lib_error_set_handler(c_error_handler)
-
-locale.setlocale(locale.LC_ALL, '')    # set your locale
-
 
 class Pocket(object):
     """docstring for Pocket"""
@@ -40,7 +38,6 @@ class Pocket(object):
         config_pocket.set_string('-hmm', config.get('sphinx','hmm'))
         config_pocket.set_string('-lm', config.get('sphinx','lm'))
         config_pocket.set_string('-dict', config.get('sphinx','dic'))
-        #config_pocket.set_string('-vad_threshold', '3.0')
         #Uncomment the following if you want to log only errors.
         config_pocket.set_string('-logfn', '/dev/null')
 
@@ -100,6 +97,7 @@ if __name__ == '__main__':
     test = Pocket(configure='./config/config.ini')
     wav = SaveFile(sample_size=p.get_sample_size(pyaudio.paInt16))
     start = False
+    frames = []
     while True:
         buf = stream.read(1024)          #Read the first Chunk from the microphone
         if buf:
@@ -114,12 +112,12 @@ if __name__ == '__main__':
                 start = False
                 time.sleep(0.5)
                 test.set_flag()
-                wav.save_wav(file_path ='./data/',file_name = SaveFile.file_name('wav'))
+                wav.save_wav(data = frames ,file_path ='./data/',file_name = SaveFile.file_name('wav'))
                 print "saved to wav file"
                 wav.flush_frames()
 
             if start:
-                wav.append_data(data=buf)
+                frames.append(buf)
                 print "saving to wav"
 
         else:

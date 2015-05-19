@@ -1,10 +1,10 @@
 # encoding=utf-8
 import jieba
 
-seg_list = jieba.cut("我来到北京清华大学", cut_all=True)
+seg_list = jieba.cut("我来2011.8.1到北京清华大学", cut_all=True)
 print("Full Mode: " + "/ ".join(seg_list))  # 全模式
 
-seg_list = jieba.cut("佟大为妻子生下一名女婴", cut_all=False)
+seg_list = jieba.cut("我来到北京清华大学", cut_all=False)
 print("Default Mode: " + "/ ".join(seg_list))  # 精确模式
 
 seg_list = jieba.cut("他来到了网易杭研大厦")  # 默认是精确模式

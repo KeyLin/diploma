@@ -36,7 +36,7 @@ def findIndex2(vol,thres):
     index = np.array(index)
     return index
 
-fw = wave.open('../data/cmd.wav','r')
+fw = wave.open('../data/20150518205812.wav','r')
 params = fw.getparams()
 nchannels, sampwidth, framerate, nframes = params[:4]
 strData = fw.readframes(nframes)

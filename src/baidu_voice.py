@@ -65,6 +65,7 @@ class BaiduVoice(object):
 			"charset" : "utf-8",
 		}
 
+		#print "sending to baidu"
 		result = requests.post(self.server_url, headers = headers, data = json.dumps(data_json))
 
 		#print result.text
