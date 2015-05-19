@@ -1,6 +1,6 @@
 #!/bin/bash
 
-myDir="/home/killin/sphinx_install"
+myDir="sphinx_install"
 if [ ! -d "$myDir" ]; then
     mkdir "$myDir"
 fi
