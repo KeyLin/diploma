@@ -4,4 +4,3 @@ venv/
 .DS_store
 *.pyc
 sphinx_install/*
-lm/*
