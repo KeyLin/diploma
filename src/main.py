@@ -70,7 +70,7 @@ class Producer(threading.Thread):
             if buf:
                 # print 'hehe'
                 pocket.decode_buffer(audio_buf=buf)
-                if pocket.get_flag(flag='yes'):
+                if pocket.get_flag(flag='HEY'):
                     start = True
                     count = 0
                     # time.sleep(0.5)
