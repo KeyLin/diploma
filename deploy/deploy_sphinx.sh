@@ -98,7 +98,7 @@ if [ ! -d "${sphinxDir}/sphinxtrain" ]; then
     if [ ! -d "$myDir0" ]; then
         tar -xzvf sphinxtrain-5prealpha.tar.gz
     fi
-    sudo bash sphinxtrain-5prealpha/configure --prefix=${sphinxDir}/sphinxtrain && make && sudo make install || { echo "sphinxtrain install failed"; exit 1; }
+    sudo bash sphinxtrain-5prealpha/configure --prefix=${sphinxDir}/sphinxtrain && sudo make && sudo make install || { echo "sphinxtrain install failed"; exit 1; }
     echo "sphinxtrain successfully installed"
 else echo "sphinxtrain already exist "
 fi
@@ -112,7 +112,7 @@ if [ ! -d "${sphinxDir}/cmuclmtk" ]; then
     if [ ! -d "$myDir0" ]; then
         tar -xzvf cmuclmtk-0.7.tar.gz
     fi
-    sudo bash cmuclmtk-0.7/configure --prefix=${sphinxDir}/cmuclmtk && make && sudo make install|| { echo "cmuclmtk-0.7 install failed"; exit 1; }
+    sudo bash cmuclmtk-0.7/configure --prefix=${sphinxDir}/cmuclmtk && sudo make && sudo make install|| { echo "cmuclmtk-0.7 install failed"; exit 1; }
     echo "cmuclmtk-0.7 successfully installed"
 else echo "cmuclmtk-0.7 already exist "
 fi
