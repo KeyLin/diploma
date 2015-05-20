@@ -21,7 +21,7 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 
 #import locale
-#locale.setlocale(locale.LC_ALL, '')    # set your locale
+# locale.setlocale(locale.LC_ALL, '')    # set your locale
 
 ERROR_HANDLER_FUNC = CFUNCTYPE(
     None, c_char_p, c_int, c_char_p, c_int, c_char_p)
@@ -61,12 +61,14 @@ class Producer(threading.Thread):
         start = False
         count = 0
         frames = []
-        print "Producer started"
+        # print "Producer started"
         while not IS_EXIT:
-            # print 'producing'
+            #print 'producing'
+            #time.sleep(0.5)
             # Read the first Chunk from the microphone
             buf = stream.read(CHUNK)
             if buf:
+                # print 'hehe'
                 pocket.decode_buffer(audio_buf=buf)
                 if pocket.get_flag(flag='yes'):
                     start = True
@@ -111,19 +113,20 @@ class Consumer(threading.Thread):
         # print IS_EXIT
         while not IS_EXIT:
             # self.emit.emit_message(u'音乐',[u'音乐',u'备忘录'])
-            # print 'consuming'
-            if not self.data.empty():
-                file_name = self.data.get(1, 3)
+            #print 'consuming'
+            try:
+                file_name = self.data.get(True,3)
                 print '%s: %s is consuming %s to the queue!' % (time.ctime(), self.getName(), file_name)
                 message = self.recognition.get_text(
                     file_format='wav', audio_file=FILE_PATH + file_name)
                 print message
-                # print type(text)
                 # print 'emitting'
                 words = list(jieba.cut(message, cut_all=False))
                 self.emit.emit_message(message, words)
                 if IS_REMOVE:
                     os.remove(FILE_PATH + file_name)
+            except Exception, e:
+                pass
         print "%s: %s finished!" % (time.ctime(), self.getName())
 
 
@@ -149,6 +152,7 @@ def main():
     # producer.join()
     # consumer.join()
     while True:
+        time.sleep(3)
         if not consumer.isAlive() and not producer.isAlive():
             break
     print 'All threads terminate!'

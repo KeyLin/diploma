@@ -67,11 +67,11 @@ class RecordAndPlay(object):
                          rate=wf.getframerate(),
                          output=True)
 
-        data = wf.readframes(chunk)
-
-        while data != '':
-            stream.write(data)
+        while True:
             data = wf.readframes(chunk)
+            if data == "":
+                break
+            stream.write(data)
 
         stream.stop_stream()
         stream.close()
