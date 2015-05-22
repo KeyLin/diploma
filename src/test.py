@@ -85,8 +85,8 @@ if __name__ == '__main__':
         l, data = inp.read()
         print(l)
         if l:
-            decoder.process_raw(data, False, False)
-            print('Best hypothesis segments: ', [seg.word for seg in decoder.seg()])
+            #decoder.process_raw(data, False, False)
+            #print('Best hypothesis segments: ', [seg.word for seg in decoder.seg()])
             time.sleep(.001)
         if l < 0 :
             print('errors')
