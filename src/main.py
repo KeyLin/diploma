@@ -44,12 +44,12 @@ asound.snd_lib_error_set_handler(c_error_handler)
 
 CHUNK = 1024
 RATE = 16000
-RECORD_SECONDS = 5
+RECORD_SECONDS = 8
 RECORD_CONTROL = int(RATE / CHUNK * RECORD_SECONDS)
 FILE_PATH = './data/'
 IS_REMOVE = False
 IS_EXIT = False
-WINDOW_SIZE = 30
+WINDOW_SIZE = 50
 card = 'default'
 
 
@@ -75,7 +75,6 @@ class Producer(threading.Thread):
 
         self.decoder.start_utt()
 
-
     def run(self):
 
         inp = alsaaudio.PCM(alsaaudio.PCM_CAPTURE, alsaaudio.PCM_NORMAL, card)
@@ -84,7 +83,6 @@ class Producer(threading.Thread):
         inp.setformat(alsaaudio.PCM_FORMAT_S16_LE)
         inp.setperiodsize(CHUNK)
 
-        #pocket = Pocket(configure='./config/config.ini')
         audio = SaveFile(SAMPLE_SIZE=2)
         start = False
         count = 0
@@ -95,25 +93,21 @@ class Producer(threading.Thread):
         while not IS_EXIT:
             # print 'producing'
             time.sleep(0.1)
-            #print RECORD_CONTROL
-            # print('Best hypothesis segments: ', [seg.word for seg in self.decoder.seg()])
-            # if 'yes' in [seg.word for seg in self.decoder.seg()]:
-            #     self.result = ['yes']
-            #     print 'OK'
-            #     self.decoder.end_utt()
-            #self.decoder.start_utt()
 
             # Read the first Chunk from the microphone
-            length,data = inp.read()
-            #pocket.decode_buffer(audio_buf=data)
-            print len(data)
-            print length
-            if length>0:
+            length, data = inp.read()
+            # pocket.decode_buffer(audio_buf=data)
+            # print len(data)
+            # print length
+            if length > 0:
                 # print 'hehe'
-                window += 1
-                self.decoder.process_raw(data, False, False)
-                print('Best hypothesis segments: ', [seg.word for seg in self.decoder.seg()])
-                if 'yes' in [seg.word for seg in self.decoder.seg()]:
+                if not start:
+                    window += 1
+                    self.decoder.process_raw(data, False, False)
+                    print('Best hypothesis segments: ',
+                          [seg.word for seg in self.decoder.seg()])
+
+                if 'YES' in [seg.word for seg in self.decoder.seg()]:
                     window = 0
                     flag = True
                     print 'OK'
@@ -128,6 +122,7 @@ class Producer(threading.Thread):
                 if flag:
                     start = True
                     count = 0
+                    flag = False
                     # time.sleep(0.5)
 
                 if count > RECORD_CONTROL:
@@ -140,13 +135,12 @@ class Producer(threading.Thread):
                         data=frames, file_path=FILE_PATH, file_name=file_name)
                     frames = []
                     self.queue.put(file_name)
-                    # print '%s: %s is producing %s to the queue!' %
-                    # (time.ctime(), self.getName(), file_name)
+                    print '%s: %s is producing %s to the queue!' % (time.ctime(), self.getName(), file_name)
 
                 if start:
                     frames.append(data)
                     count = count + 1
-                    print "saving to file ...",
+                    print "..|.",
 
         print "%s: %s finished!" % (time.ctime(), self.getName())
 
