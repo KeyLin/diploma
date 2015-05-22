@@ -107,6 +107,7 @@ class Producer(threading.Thread):
 
             # Read the first Chunk from the microphone
             length,data = inp.read()
+            print length
             #pocket.decode_buffer(audio_buf=data)
             if len(buf)%2 != 0:
                 print length
@@ -116,6 +117,7 @@ class Producer(threading.Thread):
                 # print 'hehe'
                 window += 1
                 self.decoder.process_raw(b''.join(buf), False, False)
+                print 'hehe'+str(buf)
                 print('Best hypothesis segments: ', [seg.word for seg in self.decoder.seg()])
                 if 'yes' in [seg.word for seg in self.decoder.seg()]:
                     window = 0
