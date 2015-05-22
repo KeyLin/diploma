@@ -117,7 +117,7 @@ class Producer(threading.Thread):
                 # print 'hehe'
                 window += 1
                 self.decoder.process_raw(b''.join(buf), False, False)
-                print 'hehe'+str(buf)
+                #print 'hehe'+str(buf)
                 print('Best hypothesis segments: ', [seg.word for seg in self.decoder.seg()])
                 if 'yes' in [seg.word for seg in self.decoder.seg()]:
                     window = 0
