@@ -20,7 +20,13 @@ RPi.GPIO.setup(B, RPi.GPIO.OUT)
 # pwmG.start(0)
 # pwmB.start(0)
 
+
 RPi.GPIO.output(14, True)
+time.sleep(5)
+RPi.GPIO.output(14, False)
+time.sleep(5)
+RPi.GPIO.output(14, True)
+time.sleep(5)
 
 # try:
 
