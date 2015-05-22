@@ -42,7 +42,7 @@ asound = cdll.LoadLibrary('libasound.so')
 asound.snd_lib_error_set_handler(c_error_handler)
 
 
-CHUNK = 512
+CHUNK = 341
 RATE = 16000
 RECORD_SECONDS = 5
 RECORD_CONTROL = int(RATE / CHUNK * RECORD_SECONDS)
@@ -107,53 +107,54 @@ class Producer(threading.Thread):
 
             # Read the first Chunk from the microphone
             length,data = inp.read()
+            self.decoder.process_raw(data, False, False)
             print length
-            #pocket.decode_buffer(audio_buf=data)
-            buf.append(data)
-            if len(buf)%2 != 0:
-                pass
-            else:
-                #double = 2
-                # print 'hehe'
-                window += 1
-                self.decoder.process_raw(b''.join(buf), False, False)
-                #print 'hehe'+str(buf)
-                print('Best hypothesis segments: ', [seg.word for seg in self.decoder.seg()])
-                if 'yes' in [seg.word for seg in self.decoder.seg()]:
-                    window = 0
-                    flag = True
-                    print 'OK'
-                    self.decoder.end_utt()
-                    self.decoder.start_utt()
+            # #pocket.decode_buffer(audio_buf=data)
+            # buf.append(data)
+            # if len(buf)%3 != 0:
+            #     pass
+            # else:
+            #     #double = 2
+            #     # print 'hehe'
+            #     window += 1
+            #     self.decoder.process_raw(b''.join(buf), False, False)
+            #     #print 'hehe'+str(buf)
+            #     print('Best hypothesis segments: ', [seg.word for seg in self.decoder.seg()])
+            #     if 'yes' in [seg.word for seg in self.decoder.seg()]:
+            #         window = 0
+            #         flag = True
+            #         print 'OK'
+            #         self.decoder.end_utt()
+            #         self.decoder.start_utt()
 
-                if window > WINDOW_SIZE:
-                    window = 0
-                    self.decoder.end_utt()
-                    self.decoder.start_utt()
+            #     if window > WINDOW_SIZE:
+            #         window = 0
+            #         self.decoder.end_utt()
+            #         self.decoder.start_utt()
 
-                if flag:
-                    start = True
-                    count = 0
-                    # time.sleep(0.5)
+            #     if flag:
+            #         start = True
+            #         count = 0
+            #         # time.sleep(0.5)
 
-                if count > RECORD_CONTROL:
-                    start = False
-                    count = 0
-                    # time.sleep(0.5)
-                    # pocket.set_flag()
-                    file_name = SaveFile.set_name()
-                    audio.save_wav(
-                        data=frames, file_path=FILE_PATH, file_name=file_name)
-                    frames = []
-                    self.queue.put(file_name)
-                    # print '%s: %s is producing %s to the queue!' %
-                    # (time.ctime(), self.getName(), file_name)
+            #     if count > RECORD_CONTROL:
+            #         start = False
+            #         count = 0
+            #         # time.sleep(0.5)
+            #         # pocket.set_flag()
+            #         file_name = SaveFile.set_name()
+            #         audio.save_wav(
+            #             data=frames, file_path=FILE_PATH, file_name=file_name)
+            #         frames = []
+            #         self.queue.put(file_name)
+            #         # print '%s: %s is producing %s to the queue!' %
+            #         # (time.ctime(), self.getName(), file_name)
 
-                if start:
-                    frames.append(b''.join(buf))
-                    count = count + 1
-                    print "saving to file ...",
-                buf = []
+            #     if start:
+            #         frames.append(b''.join(buf))
+            #         count = count + 1
+            #         print "saving to file ...",
+            #     buf = []
 
         print "%s: %s finished!" % (time.ctime(), self.getName())
 
