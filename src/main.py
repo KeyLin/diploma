@@ -107,7 +107,7 @@ class Producer(threading.Thread):
             length,data = inp.read()
             #pocket.decode_buffer(audio_buf=data)
             print length
-            if data:
+            if length>0:
                 # print 'hehe'
                 window += 1
                 self.decoder.process_raw(data, False, False)
