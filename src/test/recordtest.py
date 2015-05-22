@@ -69,5 +69,5 @@ if __name__ == '__main__':
             if l<0:
                 print('error')
                 break
-            f.write(data)
+            #f.write(data)
             time.sleep(.001)
