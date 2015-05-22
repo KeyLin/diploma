@@ -21,22 +21,21 @@ DATADIR = "pocketsphinx/test/data"
 # decoder=Decoder(config)
 # decoder.start_utt()
 
-# inp=alsaaudio.PCM(alsaaudio.PCM_CAPTURE, alsaaudio.PCM_NORMAL, 'default')
-# inp.setchannels(1)
-# inp.setrate(16000)
-# inp.setformat(alsaaudio.PCM_FORMAT_S16_LE)
-# inp.setperiodsize(1024)
+inp=alsaaudio.PCM(alsaaudio.PCM_CAPTURE, alsaaudio.PCM_NORMAL, 'default')
+inp.setchannels(1)
+inp.setrate(16000)
+inp.setformat(alsaaudio.PCM_FORMAT_S16_LE)
+inp.setperiodsize(1024)
 
 while True:
-    try:
-        length, data=inp.read()
-        print length
+    length, data=inp.read()
+    print length
         #if data:
             #decoder.process_raw(data, False, False)
         #print('Best hypothesis segments: ', [seg.word for seg in decoder.seg()])
             #if 'yes' in [seg.word for seg in decoder.seg()]:
                 #print 'OK'
-        except Exception, e:
-            pass
-decoder.end_utt()
+    # except Exception, e:
+    #     pass
+#decoder.end_utt()
 print('Best hypothesis segments: ', [seg.word for seg in decoder.seg()])
