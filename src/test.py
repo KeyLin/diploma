@@ -88,6 +88,6 @@ if __name__ == '__main__':
             #decoder.process_raw(data, False, False)
             #print('Best hypothesis segments: ', [seg.word for seg in decoder.seg()])
             time.sleep(.001)
-        if l < 0 :
+        if len(data)%2 !=0 :
             print('errors')
             break
