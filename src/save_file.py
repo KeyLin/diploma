@@ -10,9 +10,9 @@ class SaveFile(object):
 
     """docstring for SaveFile"""
 
-    def __init__(self, sample_size, CHANNELS=1, RATE=16000, CHUNK=1024):
+    def __init__(self, SAMPLE_SIZE, CHANNELS=1, RATE=16000, CHUNK=1024):
         super(SaveFile, self).__init__()
-        self.sample_size = sample_size
+        self.sample_size = SAMPLE_SIZE
         self.channels = CHANNELS
         self.rate = RATE
         self.chunk = CHUNK

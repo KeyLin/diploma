@@ -120,12 +120,12 @@ if __name__ == '__main__':
         if buf:
             test.decode_buffer(audio_buf=buf)
             # print test.get_flag()
-            if 'yes' in test.get_flag():
+            if test.get_flag('yes'):
                 start = True
                 time.sleep(0.5)
                 test.set_flag()
 
-            if 'no' in test.get_flag():
+            if test.get_flag('no'):
                 start = False
                 time.sleep(0.5)
                 test.set_flag()

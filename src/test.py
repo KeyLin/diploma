@@ -44,7 +44,7 @@ if __name__ == '__main__':
     # left out the sleep call in the bottom of the loop
     inp = alsaaudio.PCM(alsaaudio.PCM_CAPTURE, alsaaudio.PCM_NORMAL, card)
 
-    # Set attributes: Mono, 44100 Hz, 16 bit little endian samples
+    # Set attributes: Mono, 16000 Hz, 16 bit little endian samples
     inp.setchannels(1)
     inp.setrate(16000)
     inp.setformat(alsaaudio.PCM_FORMAT_S16_LE)
@@ -56,14 +56,11 @@ if __name__ == '__main__':
     # This means that the reads below will return either 320 bytes of data
     # or 0 bytes of data. The latter is possible because we are in nonblocking
     # mode.
-    inp.setperiodsize(160)
+    inp.setperiodsize(1024)
     
-    loops = 1000000
     while True:
-        loops -= 1
         # Read data from device
-        l, data = inp.read()
-      
-        if l:
-            f.write(data)
-            time.sleep(.001)
+        l,data = inp.read()
+        f.write(data)
+        #print (l)
+        time.sleep(.001)

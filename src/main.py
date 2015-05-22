@@ -13,8 +13,10 @@ import time
 from Queue import Queue
 import threading
 import signal
-import os,subprocess
+import os
+import subprocess
 import jieba
+import alsaaudio
 
 import sys
 reload(sys)
@@ -36,40 +38,46 @@ asound = cdll.LoadLibrary('libasound.so')
 asound.snd_lib_error_set_handler(c_error_handler)
 
 
-CHUNK = 1024
+CHUNK = 128
 RATE = 16000
 RECORD_SECONDS = 5
 RECORD_CONTROL = int(RATE / CHUNK * RECORD_SECONDS)
 FILE_PATH = './data/'
 IS_REMOVE = True
 IS_EXIT = False
+card = 'default'
 
 
 class Producer(threading.Thread):
 
     def __init__(self, t_name, queue):
         threading.Thread.__init__(self, name=t_name)
-        self.data = queue
+        self.queue = queue
 
     def run(self):
-        pa = pyaudio.PyAudio()
-        stream = pa.open(format=pyaudio.paInt16, channels=1,
-                         rate=RATE, input=True, frames_per_buffer=CHUNK)
-        stream.start_stream()
+
+        inp = alsaaudio.PCM(alsaaudio.PCM_CAPTURE, alsaaudio.PCM_NORMAL, card)
+        inp.setchannels(1)
+        inp.setrate(16000)
+        inp.setformat(alsaaudio.PCM_FORMAT_S16_LE)
+        inp.setperiodsize(CHUNK)
+
         pocket = Pocket(configure='./config/config.ini')
-        audio = SaveFile(sample_size=pa.get_sample_size(pyaudio.paInt16))
+        audio = SaveFile(SAMPLE_SIZE=2)
         start = False
         count = 0
         frames = []
         # print "Producer started"
         while not IS_EXIT:
-            #print 'producing'
+            # print 'producing'
             time.sleep(0.1)
             # Read the first Chunk from the microphone
-            buf = stream.read(CHUNK)
-            if buf:
+            length,data = inp.read()
+            #print length
+            if data:
                 # print 'hehe'
-                pocket.decode_buffer(audio_buf=buf)
+                if not start:
+                    pocket.decode_buffer(audio_buf=data)
                 if pocket.get_flag(flag='yes'):
                     start = True
                     count = 0
@@ -85,17 +93,15 @@ class Producer(threading.Thread):
                     audio.save_wav(
                         data=frames, file_path=FILE_PATH, file_name=file_name)
                     frames = []
-                    self.data.put(file_name)
+                    self.queue.put(file_name)
                     # print '%s: %s is producing %s to the queue!' %
                     # (time.ctime(), self.getName(), file_name)
 
                 if start:
-                    frames.append(buf)
+                    frames.append(data)
                     count = count + 1
-                    print "saving to file ..."
-        stream.stop_stream()
-        stream.close()
-        pa.terminate()
+                    print ".",
+
         print "%s: %s finished!" % (time.ctime(), self.getName())
 
 
@@ -104,18 +110,18 @@ class Consumer(threading.Thread):
 
     def __init__(self, t_name, queue):
         threading.Thread.__init__(self, name=t_name)
-        self.data = queue
+        self.queue = queue
         self.recognition = BaiduVoice(configure='./config/config.ini')
         self.emit = Emit()
 
     def run(self):
-        #print 'Consumer started'
+        # print 'Consumer started'
         # print IS_EXIT
         while not IS_EXIT:
             # self.emit.emit_message(u'音乐',[u'音乐',u'备忘录'])
-            #print 'consuming'
+            # print 'consuming'
             try:
-                file_name = self.data.get(True,3)
+                file_name = self.queue.get(True, 3)
                 print '%s: %s is consuming %s to the queue!' % (time.ctime(), self.getName(), file_name)
                 message = self.recognition.get_text(
                     file_format='wav', audio_file=FILE_PATH + file_name)
@@ -135,10 +141,11 @@ def handler(signum, frame):
     IS_EXIT = True
     print "receive a signal %d, IS_EXIT = %d" % (signum, IS_EXIT)
 
-      
-def network():  
+
+def network():
     fnull = open(os.devnull, 'w')
-    result=subprocess.call('ping 114.114.114',shell=True,stdout=fnull,stderr=fnull)
+    result = subprocess.call(
+        'ping 114.114.114', shell=True, stdout=fnull, stderr=fnull)
     if result:
         return False
     else:
@@ -146,6 +153,8 @@ def network():
     fnull.close()
 
 # Main thread
+
+
 def main():
     signal.signal(signal.SIGINT, handler)
     signal.signal(signal.SIGTERM, handler)
