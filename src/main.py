@@ -49,7 +49,7 @@ RECORD_CONTROL = int(RATE / CHUNK * RECORD_SECONDS)
 FILE_PATH = './data/'
 IS_REMOVE = False
 IS_EXIT = False
-WINDOW_SIZE = 100
+WINDOW_SIZE = 50
 card = 'default'
 
 
@@ -98,7 +98,7 @@ class Producer(threading.Thread):
             length, data = inp.read()
             # pocket.decode_buffer(audio_buf=data)
             # print len(data)
-            # print length
+            print length
             if length > 0:
                 # print 'hehe'
                 if not start:

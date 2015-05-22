@@ -117,26 +117,26 @@ if __name__ == '__main__':
     frames = []
     while True:
         buf = stream.read(1024)  # Read the first Chunk from the microphone
-        if buf:
-            test.decode_buffer(audio_buf=buf)
-            # print test.get_flag()
-            if test.get_flag('yes'):
-                start = True
-                time.sleep(0.5)
-                test.set_flag()
+        # if buf:
+        #     test.decode_buffer(audio_buf=buf)
+        #     # print test.get_flag()
+        #     if test.get_flag('yes'):
+        #         start = True
+        #         time.sleep(0.5)
+        #         test.set_flag()
 
-            if test.get_flag('no'):
-                start = False
-                time.sleep(0.5)
-                test.set_flag()
-                wav.save_wav(
-                    data=frames, file_path='./data/', file_name=SaveFile.file_name('wav'))
-                print "saved to wav file"
-                wav.flush_frames()
+        #     if test.get_flag('no'):
+        #         start = False
+        #         time.sleep(0.5)
+        #         test.set_flag()
+        #         wav.save_wav(
+        #             data=frames, file_path='./data/', file_name=SaveFile.file_name('wav'))
+        #         print "saved to wav file"
+        #         wav.flush_frames()
 
-            if start:
-                frames.append(buf)
-                print "saving to wav"
+        #     if start:
+        #         frames.append(buf)
+        #         print "saving to wav"
 
-        else:
-            break
+        # else:
+        #     break
