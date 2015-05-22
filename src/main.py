@@ -64,16 +64,16 @@ class Producer(threading.Thread):
 
         # Create a config object for the Decoder, which will later decode our
         # spoken words.
-        config_pocket = Decoder.default_config()
-        config_pocket.set_string('-hmm', config.get('sphinx', 'hmm'))
-        config_pocket.set_string('-lm', config.get('sphinx', 'lm'))
-        config_pocket.set_string('-dict', config.get('sphinx', 'dic'))
-        # Uncomment the following if you want to log only errors.
-        config_pocket.set_string('-logfn', '/dev/null')
+        # config_pocket = Decoder.default_config()
+        # config_pocket.set_string('-hmm', config.get('sphinx', 'hmm'))
+        # config_pocket.set_string('-lm', config.get('sphinx', 'lm'))
+        # config_pocket.set_string('-dict', config.get('sphinx', 'dic'))
+        # # Uncomment the following if you want to log only errors.
+        # config_pocket.set_string('-logfn', '/dev/null')
 
-        self.decoder = Decoder(config_pocket)
+        # self.decoder = Decoder(config_pocket)
 
-        self.decoder.start_utt()
+        # self.decoder.start_utt()
 
 
     def run(self):
@@ -111,18 +111,18 @@ class Producer(threading.Thread):
                 # print 'hehe'
                 window += 1
                 #self.decoder.process_raw(data, False, False)
-                print('Best hypothesis segments: ', [seg.word for seg in self.decoder.seg()])
-                if 'yes' in [seg.word for seg in self.decoder.seg()]:
-                    window = 0
-                    flag = True
-                    print 'OK'
-                    self.decoder.end_utt()
-                    self.decoder.start_utt()
+                # print('Best hypothesis segments: ', [seg.word for seg in self.decoder.seg()])
+                # if 'yes' in [seg.word for seg in self.decoder.seg()]:
+                #     window = 0
+                #     flag = True
+                #     print 'OK'
+                #     self.decoder.end_utt()
+                #     self.decoder.start_utt()
 
-                if window > WINDOW_SIZE:
-                    window = 0
-                    self.decoder.end_utt()
-                    self.decoder.start_utt()
+                # if window > WINDOW_SIZE:
+                #     window = 0
+                #     self.decoder.end_utt()
+                #     self.decoder.start_utt()
 
                 if flag:
                     start = True
