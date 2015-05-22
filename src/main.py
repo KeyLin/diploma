@@ -94,7 +94,7 @@ class Producer(threading.Thread):
         # print "Producer started"
         while not IS_EXIT:
             # print 'producing'
-            time.sleep(0.1)
+            time.sleep(1)
             #print RECORD_CONTROL
             # print('Best hypothesis segments: ', [seg.word for seg in self.decoder.seg()])
             # if 'yes' in [seg.word for seg in self.decoder.seg()]:
@@ -108,6 +108,7 @@ class Producer(threading.Thread):
             #pocket.decode_buffer(audio_buf=data)
             if length%2 != 0:
                 print length
+            print length
             if data:
                 # print 'hehe'
                 window += 1
