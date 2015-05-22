@@ -94,7 +94,7 @@ class Producer(threading.Thread):
         # print "Producer started"
         while not IS_EXIT:
             # print 'producing'
-            time.sleep(1)
+            #time.sleep(1)
             #print RECORD_CONTROL
             # print('Best hypothesis segments: ', [seg.word for seg in self.decoder.seg()])
             # if 'yes' in [seg.word for seg in self.decoder.seg()]:

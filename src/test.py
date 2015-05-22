@@ -29,6 +29,7 @@ inp.setperiodsize(1024)
 
 while True:
     length, data=inp.read()
+    print length
     if data:
         decoder.process_raw(data, False, False)
         #print('Best hypothesis segments: ', [seg.word for seg in decoder.seg()])
