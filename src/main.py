@@ -36,7 +36,7 @@ asound = cdll.LoadLibrary('libasound.so')
 asound.snd_lib_error_set_handler(c_error_handler)
 
 
-CHUNK = 2048
+CHUNK = 1024
 RATE = 16000
 RECORD_SECONDS = 5
 RECORD_CONTROL = int(RATE / CHUNK * RECORD_SECONDS)
