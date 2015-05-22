@@ -106,7 +106,8 @@ class Producer(threading.Thread):
             # Read the first Chunk from the microphone
             length,data = inp.read()
             #pocket.decode_buffer(audio_buf=data)
-            #print length
+            if length%2 != 0:
+                print length
             if data:
                 # print 'hehe'
                 window += 1
