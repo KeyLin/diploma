@@ -69,25 +69,25 @@ class Producer(threading.Thread):
             buf = stream.read(CHUNK)
             if buf:
                 # print 'hehe'
-                pocket.decode_buffer(audio_buf=buf)
-                if pocket.get_flag(flag='yes'):
-                    start = True
-                    count = 0
-                    # time.sleep(0.5)
-                    pocket.set_flag()
+                # pocket.decode_buffer(audio_buf=buf)
+                # if pocket.get_flag(flag='yes'):
+                #     start = True
+                #     count = 0
+                #     # time.sleep(0.5)
+                #     pocket.set_flag()
 
-                if count > RECORD_CONTROL:
-                    start = False
-                    count = 0
-                    # time.sleep(0.5)
-                    pocket.set_flag()
-                    file_name = SaveFile.set_name()
-                    audio.save_wav(
-                        data=frames, file_path=FILE_PATH, file_name=file_name)
-                    frames = []
-                    self.data.put(file_name)
-                    # print '%s: %s is producing %s to the queue!' %
-                    # (time.ctime(), self.getName(), file_name)
+                # if count > RECORD_CONTROL:
+                #     start = False
+                #     count = 0
+                #     # time.sleep(0.5)
+                #     pocket.set_flag()
+                #     file_name = SaveFile.set_name()
+                #     audio.save_wav(
+                #         data=frames, file_path=FILE_PATH, file_name=file_name)
+                #     frames = []
+                #     self.data.put(file_name)
+                #     # print '%s: %s is producing %s to the queue!' %
+                #     # (time.ctime(), self.getName(), file_name)
 
                 if start:
                     frames.append(buf)
@@ -109,7 +109,7 @@ class Consumer(threading.Thread):
         self.emit = Emit()
 
     def run(self):
-        print 'Consumer started'
+        #print 'Consumer started'
         # print IS_EXIT
         while not IS_EXIT:
             # self.emit.emit_message(u'音乐',[u'音乐',u'备忘录'])
