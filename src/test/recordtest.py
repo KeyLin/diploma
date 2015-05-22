@@ -42,7 +42,7 @@ if __name__ == '__main__':
     # Open the device in nonblocking capture mode. The last argument could
     # just as well have been zero for blocking mode. Then we could have
     # left out the sleep call in the bottom of the loop
-    inp = alsaaudio.PCM(alsaaudio.PCM_CAPTURE, alsaaudio.PCM_NONBLOCK, card)
+    inp = alsaaudio.PCM(alsaaudio.PCM_CAPTURE, alsaaudio.PCM_NORMAL, card)
 
     # Set attributes: Mono, 44100 Hz, 16 bit little endian samples
     inp.setchannels(1)
