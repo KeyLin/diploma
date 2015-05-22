@@ -49,7 +49,7 @@ RECORD_CONTROL = int(RATE / CHUNK * RECORD_SECONDS)
 FILE_PATH = './data/'
 IS_REMOVE = False
 IS_EXIT = False
-WINDOW_SIZE = 50
+WINDOW_SIZE = 100
 card = 'default'
 
 
