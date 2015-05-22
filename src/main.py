@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #!/bin/python
 
-from sphinx import Pocket
+#from sphinx import Pocket
 from baidu_voice import BaiduVoice
 from save_file import SaveFile
 from sender import Emit
@@ -17,6 +17,10 @@ import os
 import subprocess
 import jieba
 import alsaaudio
+import ConfigParser
+
+from pocketsphinx import *
+from sphinxbase import *
 
 import sys
 reload(sys)
@@ -38,13 +42,14 @@ asound = cdll.LoadLibrary('libasound.so')
 asound.snd_lib_error_set_handler(c_error_handler)
 
 
-CHUNK = 128
+CHUNK = 1024
 RATE = 16000
 RECORD_SECONDS = 5
 RECORD_CONTROL = int(RATE / CHUNK * RECORD_SECONDS)
 FILE_PATH = './data/'
-IS_REMOVE = True
+IS_REMOVE = False
 IS_EXIT = False
+WINDOW_SIZE = 45
 card = 'default'
 
 
@@ -54,6 +59,23 @@ class Producer(threading.Thread):
         threading.Thread.__init__(self, name=t_name)
         self.queue = queue
 
+        config = ConfigParser.ConfigParser()
+        config.read('./config/config.ini')
+
+        # Create a config object for the Decoder, which will later decode our
+        # spoken words.
+        config_pocket = Decoder.default_config()
+        config_pocket.set_string('-hmm', config.get('sphinx', 'hmm'))
+        config_pocket.set_string('-lm', config.get('sphinx', 'lm'))
+        config_pocket.set_string('-dict', config.get('sphinx', 'dic'))
+        # Uncomment the following if you want to log only errors.
+        config_pocket.set_string('-logfn', '/dev/null')
+
+        self.decoder = Decoder(config_pocket)
+
+        self.decoder.start_utt()
+
+
     def run(self):
 
         inp = alsaaudio.PCM(alsaaudio.PCM_CAPTURE, alsaaudio.PCM_NORMAL, card)
@@ -62,33 +84,56 @@ class Producer(threading.Thread):
         inp.setformat(alsaaudio.PCM_FORMAT_S16_LE)
         inp.setperiodsize(CHUNK)
 
-        pocket = Pocket(configure='./config/config.ini')
+        #pocket = Pocket(configure='./config/config.ini')
         audio = SaveFile(SAMPLE_SIZE=2)
         start = False
         count = 0
+        window = 0
         frames = []
+        flag = False
         # print "Producer started"
         while not IS_EXIT:
             # print 'producing'
             time.sleep(0.1)
+            print RECORD_CONTROL
+            # print('Best hypothesis segments: ', [seg.word for seg in self.decoder.seg()])
+            # if 'yes' in [seg.word for seg in self.decoder.seg()]:
+            #     self.result = ['yes']
+            #     print 'OK'
+            #     self.decoder.end_utt()
+            #self.decoder.start_utt()
+
             # Read the first Chunk from the microphone
             length,data = inp.read()
+            #pocket.decode_buffer(audio_buf=data)
             #print length
             if data:
                 # print 'hehe'
-                if not start:
-                    pocket.decode_buffer(audio_buf=data)
-                if pocket.get_flag(flag='yes'):
+                window += 1
+                self.decoder.process_raw(data, False, False)
+                print('Best hypothesis segments: ', [seg.word for seg in self.decoder.seg()])
+                if 'yes' in [seg.word for seg in self.decoder.seg()]:
+                    window = 0
+                    flag = True
+                    print 'OK'
+                    self.decoder.end_utt()
+                    self.decoder.start_utt()
+
+                if window > WINDOW_SIZE:
+                    window = 0
+                    self.decoder.end_utt()
+                    self.decoder.start_utt()
+
+                if flag:
                     start = True
                     count = 0
                     # time.sleep(0.5)
-                    pocket.set_flag()
 
                 if count > RECORD_CONTROL:
                     start = False
                     count = 0
                     # time.sleep(0.5)
-                    pocket.set_flag()
+                    # pocket.set_flag()
                     file_name = SaveFile.set_name()
                     audio.save_wav(
                         data=frames, file_path=FILE_PATH, file_name=file_name)
@@ -100,7 +145,7 @@ class Producer(threading.Thread):
                 if start:
                     frames.append(data)
                     count = count + 1
-                    print ".",
+                    print "saving to file ...",
 
         print "%s: %s finished!" % (time.ctime(), self.getName())
 
