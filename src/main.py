@@ -109,9 +109,9 @@ class Producer(threading.Thread):
             length,data = inp.read()
             print length
             #pocket.decode_buffer(audio_buf=data)
+            buf.append(data)
             if len(buf)%2 != 0:
-                print length
-                buf.append(data)
+                pass
             else:
                 #double = 2
                 # print 'hehe'
