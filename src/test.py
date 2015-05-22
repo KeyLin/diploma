@@ -20,6 +20,10 @@ import sys
 import time
 import getopt
 import alsaaudio
+import ConfigParser
+from pocketsphinx import *
+from sphinxbase import *
+
 
 def usage():
     print('usage: recordtest.py [-c <card>] <file>', file=sys.stderr)
@@ -57,6 +61,22 @@ if __name__ == '__main__':
     # or 0 bytes of data. The latter is possible because we are in nonblocking
     # mode.
     inp.setperiodsize(160)
+
+    config = ConfigParser.ConfigParser()
+    config.read('./config/config.ini')
+
+    # Create a config object for the Decoder, which will later decode our
+    # spoken words.
+    config_pocket = Decoder.default_config()
+    config_pocket.set_string('-hmm', config.get('sphinx', 'hmm'))
+    config_pocket.set_string('-lm', config.get('sphinx', 'lm'))
+    config_pocket.set_string('-dict', config.get('sphinx', 'dic'))
+    # Uncomment the following if you want to log only errors.
+    config_pocket.set_string('-logfn', '/dev/null')
+
+    decoder = Decoder(config_pocket)
+
+    decoder.start_utt()
     
     loops = 1000000
     while loops > 0:
@@ -65,5 +85,6 @@ if __name__ == '__main__':
         l, data = inp.read()
         print(l)
         if l:
-            f.write(data)
+            decoder.process_raw(data, False, False)
+            print('Best hypothesis segments: ', [seg.word for seg in decoder.seg()])
             time.sleep(.001)
