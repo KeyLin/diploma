@@ -20,7 +20,7 @@ RPi.GPIO.setup(B, RPi.GPIO.OUT)
 # pwmG.start(0)
 # pwmB.start(0)
 
-RPi.GPIO.output(14, False)
+RPi.GPIO.output(14, True)
 
 # try:
 
@@ -52,4 +52,4 @@ RPi.GPIO.output(14, False)
 # pwmG.stop()
 # pwmB.stop()
 
-# RPi.GPIO.cleanup()
+RPi.GPIO.cleanup()
