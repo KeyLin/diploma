@@ -49,7 +49,7 @@ RECORD_CONTROL = int(RATE / CHUNK * RECORD_SECONDS)
 FILE_PATH = './data/'
 IS_REMOVE = False
 IS_EXIT = False
-WINDOW_SIZE = 45
+WINDOW_SIZE = 30
 card = 'default'
 
 
@@ -109,7 +109,7 @@ class Producer(threading.Thread):
             #print length
             if data:
                 # print 'hehe'
-                window += 1
+                window += 1b
                 self.decoder.process_raw(data, False, False)
                 print('Best hypothesis segments: ', [seg.word for seg in self.decoder.seg()])
                 if 'yes' in [seg.word for seg in self.decoder.seg()]:
