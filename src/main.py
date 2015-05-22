@@ -13,7 +13,7 @@ import time
 from Queue import Queue
 import threading
 import signal
-import os
+import os,subprocess
 import jieba
 
 import sys
@@ -70,7 +70,7 @@ class Producer(threading.Thread):
             if buf:
                 # print 'hehe'
                 pocket.decode_buffer(audio_buf=buf)
-                if pocket.get_flag(flag='HEY'):
+                if pocket.get_flag(flag='yes'):
                     start = True
                     count = 0
                     # time.sleep(0.5)
@@ -135,9 +135,17 @@ def handler(signum, frame):
     IS_EXIT = True
     print "receive a signal %d, IS_EXIT = %d" % (signum, IS_EXIT)
 
+      
+def network():  
+    fnull = open(os.devnull, 'w')
+    result=subprocess.call('ping 114.114.114',shell=True,stdout=fnull,stderr=fnull)
+    if result:
+        return False
+    else:
+        return True
+    fnull.close()
+
 # Main thread
-
-
 def main():
     signal.signal(signal.SIGINT, handler)
     signal.signal(signal.SIGTERM, handler)
