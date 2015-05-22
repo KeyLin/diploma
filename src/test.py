@@ -84,7 +84,7 @@ if __name__ == '__main__':
         # Read data from device
         l, data = inp.read()
         print(l)
-        if l:
+        if l>0:
             decoder.process_raw(data, False, False)
             print('Best hypothesis segments: ', [seg.word for seg in decoder.seg()])
             time.sleep(.001)
