@@ -108,12 +108,11 @@ class Producer(threading.Thread):
             # Read the first Chunk from the microphone
             length,data = inp.read()
             #pocket.decode_buffer(audio_buf=data)
-            if length%2 != 0:
+            if len(buf)%2 != 0:
                 print length
-            double -= 1
-            buf.append(data)
-            if double == 0:
-                double = 2
+                buf.append(data)
+            else:
+                #double = 2
                 # print 'hehe'
                 window += 1
                 self.decoder.process_raw(b''.join(buf), False, False)
