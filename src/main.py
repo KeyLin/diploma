@@ -42,7 +42,7 @@ asound = cdll.LoadLibrary('libasound.so')
 asound.snd_lib_error_set_handler(c_error_handler)
 
 
-CHUNK = 1024
+CHUNK = 512
 RATE = 16000
 RECORD_SECONDS = 5
 RECORD_CONTROL = int(RATE / CHUNK * RECORD_SECONDS)
@@ -91,6 +91,8 @@ class Producer(threading.Thread):
         window = 0
         frames = []
         flag = False
+        buf = []
+        double = 2
         # print "Producer started"
         while not IS_EXIT:
             # print 'producing'
@@ -108,11 +110,13 @@ class Producer(threading.Thread):
             #pocket.decode_buffer(audio_buf=data)
             if length%2 != 0:
                 print length
-            print length
-            if data:
+            double -= 1
+            buf.append(data)
+            if double == 0:
+                double = 2
                 # print 'hehe'
                 window += 1
-                self.decoder.process_raw(data, False, False)
+                self.decoder.process_raw(b''.join(buf), False, False)
                 print('Best hypothesis segments: ', [seg.word for seg in self.decoder.seg()])
                 if 'yes' in [seg.word for seg in self.decoder.seg()]:
                     window = 0
@@ -145,9 +149,10 @@ class Producer(threading.Thread):
                     # (time.ctime(), self.getName(), file_name)
 
                 if start:
-                    frames.append(data)
+                    frames.append(b''.join(buf))
                     count = count + 1
                     print "saving to file ...",
+                buf = []
 
         print "%s: %s finished!" % (time.ctime(), self.getName())
 
