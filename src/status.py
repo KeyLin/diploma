@@ -42,38 +42,6 @@ try:
 		pwmB.ChangeDutyCycle(0)
 		time.sleep(t)
 		
-		# 红灯，绿灯全亮，蓝灯全暗（黄色）
-		pwmR.ChangeDutyCycle(0)
-		pwmG.ChangeDutyCycle(0)
-		pwmB.ChangeDutyCycle(100)
-		time.sleep(t)
-		
-		# 红灯，蓝灯全亮，绿灯全暗（洋红色）
-		pwmR.ChangeDutyCycle(0)
-		pwmG.ChangeDutyCycle(100)
-		pwmB.ChangeDutyCycle(0)
-		time.sleep(t)
-		
-		# 绿灯，蓝灯全亮，红灯全暗（青色）
-		pwmR.ChangeDutyCycle(100)
-		pwmG.ChangeDutyCycle(0)
-		pwmB.ChangeDutyCycle(0)
-		time.sleep(t)
-		
-		# 红灯，绿灯，蓝灯全亮（白色）
-		pwmR.ChangeDutyCycle(0)
-		pwmG.ChangeDutyCycle(0)
-		pwmB.ChangeDutyCycle(0)
-		time.sleep(t)
-		
-		# 调整红绿蓝LED的各个颜色的亮度组合出各种颜色
-		for r in xrange (0, 101, 20):
-			pwmR.ChangeDutyCycle(r)
-			for g in xrange (0, 101, 20):
-				pwmG.ChangeDutyCycle(g)
-				for b in xrange (0, 101, 20):
-					pwmB.ChangeDutyCycle(b)
-					time.sleep(0.01)
 
 except KeyboardInterrupt:
 	pass
