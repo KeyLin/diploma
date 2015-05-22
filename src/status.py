@@ -23,24 +23,24 @@ pwmB.start(0)
 try:
 
 	t = 0.4
-	while True:
+	#while True:
 		# 红色灯全亮，蓝灯，绿灯全暗（红色）
-		pwmR.ChangeDutyCycle(0)
-		pwmG.ChangeDutyCycle(100)
-		pwmB.ChangeDutyCycle(100)
-		time.sleep(t)
+	pwmR.ChangeDutyCycle(0)
+	pwmG.ChangeDutyCycle(100)
+	pwmB.ChangeDutyCycle(100)
+	time.sleep(t)
 		
-		# 绿色灯全亮，红灯，蓝灯全暗（绿色）
-		pwmR.ChangeDutyCycle(100)
-		pwmG.ChangeDutyCycle(0)
-		pwmB.ChangeDutyCycle(100)
-		time.sleep(t)
+		# # 绿色灯全亮，红灯，蓝灯全暗（绿色）
+		# pwmR.ChangeDutyCycle(100)
+		# pwmG.ChangeDutyCycle(0)
+		# pwmB.ChangeDutyCycle(100)
+		# time.sleep(t)
 		
-		# 蓝色灯全亮，红灯，绿灯全暗（蓝色）
-		pwmR.ChangeDutyCycle(100)
-		pwmG.ChangeDutyCycle(100)
-		pwmB.ChangeDutyCycle(0)
-		time.sleep(t)
+		# # 蓝色灯全亮，红灯，绿灯全暗（蓝色）
+		# pwmR.ChangeDutyCycle(100)
+		# pwmG.ChangeDutyCycle(100)
+		# pwmB.ChangeDutyCycle(0)
+		# time.sleep(t)
 		
 
 except KeyboardInterrupt:
