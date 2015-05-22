@@ -36,7 +36,7 @@ asound = cdll.LoadLibrary('libasound.so')
 asound.snd_lib_error_set_handler(c_error_handler)
 
 
-CHUNK = 1024
+CHUNK = 2048
 RATE = 16000
 RECORD_SECONDS = 5
 RECORD_CONTROL = int(RATE / CHUNK * RECORD_SECONDS)
@@ -64,30 +64,30 @@ class Producer(threading.Thread):
         # print "Producer started"
         while not IS_EXIT:
             #print 'producing'
-            #time.sleep(0.5)
+            time.sleep(0.1)
             # Read the first Chunk from the microphone
             buf = stream.read(CHUNK)
             if buf:
                 # print 'hehe'
-                # pocket.decode_buffer(audio_buf=buf)
-                # if pocket.get_flag(flag='yes'):
-                #     start = True
-                #     count = 0
-                #     # time.sleep(0.5)
-                #     pocket.set_flag()
+                pocket.decode_buffer(audio_buf=buf)
+                if pocket.get_flag(flag='yes'):
+                    start = True
+                    count = 0
+                    # time.sleep(0.5)
+                    pocket.set_flag()
 
-                # if count > RECORD_CONTROL:
-                #     start = False
-                #     count = 0
-                #     # time.sleep(0.5)
-                #     pocket.set_flag()
-                #     file_name = SaveFile.set_name()
-                #     audio.save_wav(
-                #         data=frames, file_path=FILE_PATH, file_name=file_name)
-                #     frames = []
-                #     self.data.put(file_name)
-                #     # print '%s: %s is producing %s to the queue!' %
-                #     # (time.ctime(), self.getName(), file_name)
+                if count > RECORD_CONTROL:
+                    start = False
+                    count = 0
+                    # time.sleep(0.5)
+                    pocket.set_flag()
+                    file_name = SaveFile.set_name()
+                    audio.save_wav(
+                        data=frames, file_path=FILE_PATH, file_name=file_name)
+                    frames = []
+                    self.data.put(file_name)
+                    # print '%s: %s is producing %s to the queue!' %
+                    # (time.ctime(), self.getName(), file_name)
 
                 if start:
                     frames.append(buf)
