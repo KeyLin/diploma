@@ -10,7 +10,7 @@ config = Decoder.default_config()
 config.set_string('-hmm', path.join(MODELDIR, 'en-us/'))
 config.set_string('-lm', path.join(MODELDIR, 'lm/9633.lm'))
 config.set_string('-dict', path.join(MODELDIR, 'lm/9633.dic'))
-
+config.set_string('-logfn', '/dev/null')
 # Decode streaming data.
 decoder = Decoder(config)
 
