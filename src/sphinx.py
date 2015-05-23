@@ -111,10 +111,10 @@ if __name__ == '__main__':
     stream = p.open(format=pyaudio.paInt16, channels=1,
                     rate=16000, input=True, frames_per_buffer=1024)
     stream.start_stream()
-    # test = Pocket(configure='./config/config.ini')
-    # wav = SaveFile(p.get_sample_size(pyaudio.paInt16))
-    # start = False
-    # frames = []
+    test = Pocket(configure='./config/config.ini')
+    wav = SaveFile(p.get_sample_size(pyaudio.paInt16))
+    start = False
+    frames = []
     while True:
         buf = stream.read(1024)  # Read the first Chunk from the microphone
         # if buf:
