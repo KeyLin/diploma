@@ -46,7 +46,7 @@ class Pocket(object):
         config_pocket.set_string('-lm', config.get('sphinx', 'lm'))
         config_pocket.set_string('-dict', config.get('sphinx', 'dic'))
         # Uncomment the following if you want to log only errors.
-        config_pocket.set_string('-logfn', '/dev/null')
+        # config_pocket.set_string('-logfn', '/dev/null')
 
         # Create the decoder from the config
         self.decoder = Decoder(config_pocket)
