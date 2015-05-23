@@ -98,11 +98,10 @@ class Pocket(object):
                 # Say to the decoder, that a new "sentence" begins
                 self.decoder.start_utt()
 
-                print "Listening: No audio"
-
+                #print "Listening: No audio"
                 #print("stopped listenning")
             else:
-                print "Listening: Incoming audio..."
+                #print "Listening: Incoming audio..."
                 pass
 
 
