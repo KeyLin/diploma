@@ -13,7 +13,8 @@ import time
 from Queue import Queue
 import threading
 import signal
-import os,subprocess
+import os
+import subprocess
 import jieba
 
 import sys
@@ -63,8 +64,8 @@ class Producer(threading.Thread):
         frames = []
         # print "Producer started"
         while not IS_EXIT:
-            #print 'producing'
-            #time.sleep(0.5)
+            # print 'producing'
+            # time.sleep(0.5)
             # Read the first Chunk from the microphone
             buf = stream.read(CHUNK)
             if buf:
@@ -113,9 +114,9 @@ class Consumer(threading.Thread):
         # print IS_EXIT
         while not IS_EXIT:
             # self.emit.emit_message(u'音乐',[u'音乐',u'备忘录'])
-            #print 'consuming'
+            # print 'consuming'
             try:
-                file_name = self.data.get(True,3)
+                file_name = self.data.get(True, 3)
                 print '%s: %s is consuming %s to the queue!' % (time.ctime(), self.getName(), file_name)
                 message = self.recognition.get_text(
                     file_format='wav', audio_file=FILE_PATH + file_name)
@@ -135,10 +136,11 @@ def handler(signum, frame):
     IS_EXIT = True
     print "receive a signal %d, IS_EXIT = %d" % (signum, IS_EXIT)
 
-      
-def network():  
+
+def network():
     fnull = open(os.devnull, 'w')
-    result=subprocess.call('ping 114.114.114',shell=True,stdout=fnull,stderr=fnull)
+    result = subprocess.call(
+        'ping 114.114.114', shell=True, stdout=fnull, stderr=fnull)
     if result:
         return False
     else:
@@ -146,6 +148,8 @@ def network():
     fnull.close()
 
 # Main thread
+
+
 def main():
     signal.signal(signal.SIGINT, handler)
     signal.signal(signal.SIGTERM, handler)

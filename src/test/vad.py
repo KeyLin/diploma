@@ -1,10 +1,10 @@
 import wave
 import numpy as np
 import matplotlib.pyplot as plt
-import Volume as vp
+import volume as vp
 import re
 
-def findIndex(vol,thres):
+def findIndex1(vol,thres):
     length = len(vol)
     print length
     index = [0]
@@ -36,7 +36,7 @@ def findIndex2(vol,thres):
     index = np.array(index)
     return index
 
-fw = wave.open('../data/20150518205812.wav','r')
+fw = wave.open('../data/cmd.wav','r')
 params = fw.getparams()
 nchannels, sampwidth, framerate, nframes = params[:4]
 strData = fw.readframes(nframes)
@@ -53,9 +53,9 @@ threshold3 = max(vol)*0.01+min(vol)*5.0
 
 time = np.arange(0,nframes) * (1.0/framerate)
 frame = np.arange(0,len(vol)) * (nframes*1.0/len(vol)/framerate)
-index1 = findIndex2(vol,threshold1)*(nframes*1.0/len(vol)/framerate)
-index2 = findIndex2(vol,threshold2)*(nframes*1.0/len(vol)/framerate)
-index3 = findIndex2(vol,threshold3)*(nframes*1.0/len(vol)/framerate)
+index1 = findIndex1(vol,threshold1)*(nframes*1.0/len(vol)/framerate)
+index2 = findIndex1(vol,threshold2)*(nframes*1.0/len(vol)/framerate)
+index3 = findIndex1(vol,threshold3)*(nframes*1.0/len(vol)/framerate)
 end = nframes * (1.0/framerate)
 print nframes
 
