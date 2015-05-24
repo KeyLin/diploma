@@ -46,16 +46,16 @@ class Pocket(object):
         config_pocket.set_string('-lm', config.get('sphinx', 'lm'))
         config_pocket.set_string('-dict', config.get('sphinx', 'dic'))
         # Uncomment the following if you want to log only errors.
-        # config_pocket.set_string('-logfn', '/dev/null')
+        config_pocket.set_string('-logfn', '/dev/null')
 
         # Create the decoder from the config
         self.decoder = Decoder(config_pocket)
 
+        self.decoder.start_utt()
         # Needed to get the state, when you are speaking/not speaking ->
         # statusbar
         self.in_speech_bf = True
 
-        self.decoder.start_utt()
         self.result = ["hehe"]
         # print type(self.result)
 
@@ -75,7 +75,7 @@ class Pocket(object):
             # If the decoder has partial results, display them in the screen.
             if self.decoder.hyp().hypstr != '':
                 result = self.decoder.hyp().hypstr
-                print('Partial decoding result: '+ result)
+                #print('Partial decoding result: '+ result)
         except AttributeError:
             pass
         if self.decoder.get_in_speech():
@@ -98,10 +98,11 @@ class Pocket(object):
                 # Say to the decoder, that a new "sentence" begins
                 self.decoder.start_utt()
 
-                #print "Listening: No audio"
+                print "Listening: No audio"
+
                 #print("stopped listenning")
             else:
-                #print "Listening: Incoming audio..."
+                print "Listening: Incoming audio..."
                 pass
 
 
@@ -111,31 +112,31 @@ if __name__ == '__main__':
                     rate=16000, input=True, frames_per_buffer=1024)
     stream.start_stream()
     test = Pocket(configure='./config/config.ini')
-    wav = SaveFile(p.get_sample_size(pyaudio.paInt16))
+    wav = SaveFile(sample_size=p.get_sample_size(pyaudio.paInt16))
     start = False
     frames = []
     while True:
         buf = stream.read(1024)  # Read the first Chunk from the microphone
-        # if buf:
-        #     test.decode_buffer(audio_buf=buf)
-        #     # print test.get_flag()
-        #     if test.get_flag('yes'):
-        #         start = True
-        #         time.sleep(0.5)
-        #         test.set_flag()
+        if buf:
+            test.decode_buffer(audio_buf=buf)
+            # print test.get_flag()
+            if 'yes' in test.get_flag():
+                start = True
+                time.sleep(0.5)
+                test.set_flag()
 
-        #     if test.get_flag('no'):
-        #         start = False
-        #         time.sleep(0.5)
-        #         test.set_flag()
-        #         wav.save_wav(
-        #             data=frames, file_path='./data/', file_name=SaveFile.file_name('wav'))
-        #         print "saved to wav file"
-        #         wav.flush_frames()
+            if 'no' in test.get_flag():
+                start = False
+                time.sleep(0.5)
+                test.set_flag()
+                wav.save_wav(
+                    data=frames, file_path='./data/', file_name=SaveFile.file_name('wav'))
+                print "saved to wav file"
+                wav.flush_frames()
 
-        #     if start:
-        #         frames.append(buf)
-        #         print "saving to wav"
+            if start:
+                frames.append(buf)
+                print "saving to wav"
 
-        # else:
-        #     break
+        else:
+            break
