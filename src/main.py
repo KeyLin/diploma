@@ -41,7 +41,7 @@ RATE = 16000
 RECORD_SECONDS = 5
 RECORD_CONTROL = int(RATE / CHUNK * RECORD_SECONDS)
 FILE_PATH = './data/'
-IS_REMOVE = True
+IS_REMOVE = False
 IS_EXIT = False
 
 
@@ -70,7 +70,7 @@ class Producer(threading.Thread):
             if buf:
                 # print 'hehe'
                 pocket.decode_buffer(audio_buf=buf)
-                if pocket.get_flag(flag='YES'):
+                if pocket.get_flag(flag='HEY'):
                     start = True
                     count = 0
                     # time.sleep(0.5)
