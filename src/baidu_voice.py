@@ -84,7 +84,7 @@ class BaiduVoice(object):
         else:
             err_msg = "".join(re.get('err_msg')).encode('utf-8')
             result.append(err_msg)
-            print err_msg
+            print err_msg+str(re.get('err_no'))
             # print "err_no:"+str(err_no)
             # exit(0)
         return result

@@ -54,6 +54,7 @@ class Producer(threading.Thread):
         self.data = queue
 
     def run(self):
+        global event
         pa = pyaudio.PyAudio()
         stream = pa.open(format=pyaudio.paInt16, channels=1,
                          rate=RATE, input=True, frames_per_buffer=CHUNK)
@@ -67,13 +68,14 @@ class Producer(threading.Thread):
         while not IS_EXIT:
             # print 'producing'
             # time.sleep(0.5)
+            event.wait()
+            status.set_color(color='blue')
             # Read the first Chunk from the microphone
             buf = stream.read(CHUNK)
             if buf:
                 # print 'hehe'
                 pocket.decode_buffer(audio_buf=buf)
                 if pocket.get_flag(flag='HEY'):
-                    status.set_color(color='blue')
                     start = True
                     count = 0
                     # time.sleep(0.5)
@@ -113,11 +115,12 @@ class Consumer(threading.Thread):
         self.emit = Emit()
 
     def run(self):
-        print 'Consumer started'
+        # print 'Consumer started'
+        global event
         # print IS_EXIT
         while not IS_EXIT:
-            # self.emit.emit_message(u'音乐',[u'音乐',u'备忘录'])
             # print 'consuming'
+            event.wait()
             try:
                 file_name = self.data.get(True, 3)
                 print '%s: %s is consuming %s to the queue!' % (time.ctime(), self.getName(), file_name)
@@ -153,10 +156,14 @@ def network():
 
 # Main thread
 
+event = threading.Event()
+event.clear()
 
 def main():
     signal.signal(signal.SIGINT, handler)
     signal.signal(signal.SIGTERM, handler)
+
+    lock = threading.Event()
 
     queue = Queue(10)
     producer = Producer('Pro.', queue)
@@ -171,6 +178,12 @@ def main():
         time.sleep(3)
         if not consumer.isAlive() and not producer.isAlive():
             break
+        if network():
+            event.set()
+        else:
+            status.set_color(color='red')
+            event.clear()
+
     print 'All threads terminate!'
     status.reset()
 
