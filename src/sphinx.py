@@ -76,6 +76,7 @@ class Pocket(object):
             self.decoder.start_utt()
             self.window = 50
         self.decoder.process_raw(audio_buf, False, False)
+        print('Best hypothesis segments: ', [seg.word for seg in decoder.seg()])
         return [seg.word for seg in decoder.seg()]
         # try:
         #     # If the decoder has partial results, display them in the screen.
@@ -104,12 +105,12 @@ class Pocket(object):
         #         # Say to the decoder, that a new "sentence" begins
         #         self.decoder.start_utt()
 
-                print "Listening: No audio"
+            #     print "Listening: No audio"
 
-                #print("stopped listenning")
-            else:
-                print "Listening: Incoming audio..."
-                pass
+            #     #print("stopped listenning")
+            # else:
+            #     print "Listening: Incoming audio..."
+            #     pass
 
 
 if __name__ == '__main__':
