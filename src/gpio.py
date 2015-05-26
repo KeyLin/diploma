@@ -30,7 +30,7 @@ _export_lock = threading.Lock()
 _pyset = set
 
 _open = dict()
-FMODE = 'w+'
+FMODE = 'w'
 
 IN, OUT = 'in', 'out'
 LOW, HIGH = 'low', 'high'
