@@ -63,6 +63,9 @@ class Pocket(object):
 
     def get_flag(self, flag='yes'):
         if flag in self.result:
+            self.decoder.end_utt()
+            self.decoder.start_utt()
+            self.window = 50
             return True
         else:
             return False
