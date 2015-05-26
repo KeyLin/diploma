@@ -141,6 +141,8 @@ class Consumer(threading.Thread):
 
 def handler(signum, frame):
     global IS_EXIT
+    global event
+    event.set()
     IS_EXIT = True
     print "receive a signal %d, IS_EXIT = %d" % (signum, IS_EXIT)
 
