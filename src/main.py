@@ -17,6 +17,7 @@ import signal
 import os
 import subprocess
 import jieba
+import urllib2
 
 import sys
 reload(sys)
@@ -144,15 +145,12 @@ def handler(signum, frame):
     print "receive a signal %d, IS_EXIT = %d" % (signum, IS_EXIT)
 
 
-def network():
-    fnull = open(os.devnull, 'w')
-    result = subprocess.call(
-        'ping 114.114.114', shell=True, stdout=fnull, stderr=fnull)
-    if result:
-        return False
-    else:
+def internet():
+    try:
+        response=urllib2.urlopen('https://www.baidu.com/',timeout=1)
         return True
-    fnull.close()
+    except urllib2.URLError as err: pass
+    return False
 
 # Main thread
 
@@ -176,7 +174,7 @@ def main():
         time.sleep(2)
         if not consumer.isAlive() and not producer.isAlive():
             break
-        if network():
+        if internet():
             event.set()
         else:
             status.set_color(color='red')
@@ -187,8 +185,4 @@ def main():
 
 
 if __name__ == '__main__':
-    # main()
-    if network():
-        print "yes"
-    else:
-        print "no"
+    main()
