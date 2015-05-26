@@ -22,7 +22,7 @@ def set_color(color):
 		gpio.set(G,0)
 	elif color == 'blue':
 		gpio.set(B,0)
-		
+
 if __name__ == '__main__':
-	RGB.set_color(color='red')
+	set_color(color='red')
 		
