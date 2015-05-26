@@ -123,7 +123,7 @@ class Consumer(threading.Thread):
                 print '%s: %s is consuming %s to the queue!' % (time.ctime(), self.getName(), file_name)
                 message = self.recognition.get_text(
                     file_format='wav', audio_file=FILE_PATH + file_name)
-                print message
+                # print message
                 # print 'emitting'
                 words = list(jieba.cut(message, cut_all=False))
                 self.emit.emit_message(message, words)
@@ -171,6 +171,8 @@ def main():
         if not consumer.isAlive() and not producer.isAlive():
             break
     print 'All threads terminate!'
+    status.reset()
+
 
 if __name__ == '__main__':
     main()
