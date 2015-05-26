@@ -76,6 +76,7 @@ class Pocket(object):
             self.decoder.start_utt()
             self.window = 50
         self.decoder.process_raw(audio_buf, False, False)
+        self.window -= 1
         print('Best hypothesis segments: ', [seg.word for seg in self.decoder.seg()])
         return [seg.word for seg in self.decoder.seg()]
         # try:
