@@ -14,7 +14,7 @@ def pin_init():
 	os.system('echo out > /sys/class/gpio/gpio14/direction')
 	os.system('echo 15 > /sys/class/gpio/export')
 	os.system('echo out > /sys/class/gpio/gpio15/direction')
-	os.system('echo 15 > /sys/class/gpio/export')
+	os.system('echo 18 > /sys/class/gpio/export')
 	os.system('echo out > /sys/class/gpio/gpio18/direction')
 
 def set_color(color):
