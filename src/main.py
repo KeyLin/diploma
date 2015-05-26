@@ -163,8 +163,6 @@ def main():
     signal.signal(signal.SIGINT, handler)
     signal.signal(signal.SIGTERM, handler)
 
-    lock = threading.Event()
-
     queue = Queue(10)
     producer = Producer('Pro.', queue)
     consumer = Consumer('Con.', queue)
@@ -175,7 +173,7 @@ def main():
     # producer.join()
     # consumer.join()
     while True:
-        time.sleep(3)
+        time.sleep(2)
         if not consumer.isAlive() and not producer.isAlive():
             break
         if network():
@@ -189,4 +187,8 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    # main()
+    if network():
+        print "yes"
+    else:
+        print "no"
