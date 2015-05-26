@@ -17,9 +17,9 @@ class Emit(object):
         self.type = TYPE
 
     def get_route(self, words):
-        for key in words:
-            # print key
-            route = route_dic.get(key)
+        for key_word in words:
+            # print key_word
+            route = route_dic.get(key_word)
             # print route
             if route != None:
                 return route

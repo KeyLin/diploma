@@ -178,7 +178,7 @@ def main():
     # producer.join()
     # consumer.join()
     while True:
-        time.sleep(2)
+        time.sleep(1)
         if IS_EXIT:
             event.set()
         if not consumer.isAlive() and not producer.isAlive():
