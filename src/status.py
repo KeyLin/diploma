@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
-os.system
+import os
 import time
 
 R,G,B=14,15,18
@@ -51,11 +51,12 @@ def set_color(color):
 	# 	gpio.set(B,0)
 
 if __name__ == '__main__':
+	pin_init()
 	set_color(color='red')
 	time.sleep(3)
 	set_color(color='green')
 	time.sleep(3)
 	set_color(color='blue')
 	time.sleep(3)
-	reset()
+	#reset()
 		
