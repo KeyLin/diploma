@@ -75,7 +75,7 @@ class Pocket(object):
             # If the decoder has partial results, display them in the screen.
             if self.decoder.hyp().hypstr != '':
                 result = self.decoder.hyp().hypstr
-                #print('Partial decoding result: '+ result)
+                print('Partial decoding result: '+ result)
         except AttributeError:
             pass
         if self.decoder.get_in_speech():
