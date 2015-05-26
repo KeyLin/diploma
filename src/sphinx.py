@@ -76,8 +76,8 @@ class Pocket(object):
             self.decoder.start_utt()
             self.window = 50
         self.decoder.process_raw(audio_buf, False, False)
-        print('Best hypothesis segments: ', [seg.word for seg in decoder.seg()])
-        return [seg.word for seg in decoder.seg()]
+        print('Best hypothesis segments: ', [seg.word for seg in self.decoder.seg()])
+        return [seg.word for seg in self.decoder.seg()]
         # try:
         #     # If the decoder has partial results, display them in the screen.
         #     if self.decoder.hyp().hypstr != '':
