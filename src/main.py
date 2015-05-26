@@ -125,8 +125,9 @@ class Consumer(threading.Thread):
                     file_format='wav', audio_file=FILE_PATH + file_name)
                 # print message
                 # print 'emitting'
-                words = list(jieba.cut(message, cut_all=False))
-                self.emit.emit_message(message, words)
+                if(message[0]==0):
+                    words = list(jieba.cut(message, cut_all=False))
+                    self.emit.emit_message(message, words)
                 if IS_REMOVE:
                     os.remove(FILE_PATH + file_name)
             except Exception, e:

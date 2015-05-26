@@ -69,20 +69,26 @@ class BaiduVoice(object):
         }
 
         # print "sending to baidu"
-        result = requests.post(
+        re = requests.post(
             self.server_url, headers=headers, data=json.dumps(data_json))
 
-        # print result.text
-        result = result.json()
-        if result.get('err_no') == 0:
-            text = "".join(result.get('result')).encode('utf-8')
+        # print re.text
+        result = []
+        re = re.json()
+        result.append(re.get('err_no'))
+        if re.get('err_no') == 0:
+            text = "".join(re.get('re')).encode('utf-8')
+            result.append(text)
             # print text
-            return text
+            # return text
         else:
-            err_msg = "".join(result.get('err_msg')).encode('utf-8')
-            return err_msg
+            err_msg = "".join(re.get('err_msg')).encode('utf-8')
+            result.append(err_msg)
+            print err_msg
             # print "err_no:"+str(err_no)
             # exit(0)
+        return result
+
 
 
 if __name__ == "__main__":
