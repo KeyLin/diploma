@@ -51,11 +51,11 @@ class VAD(object):
         volume = self.get_volume(wave_data)
 
         if case == 1:
-            thresh = max(volume)*0.10
+            threshhold = max(volume)*0.10
         if case == 2:
-            thresh = min(volume)*10.0
+            threshhold = min(volume)*10.0
         if case == 3: 
-            thresh = max(volume)*0.05+min(volume)*5.0
+            threshhold = max(volume)*0.05+min(volume)*5.0
 
         wave_data = self.string_split(wave_data,self.frame_size)
         length = len(wave_data)
@@ -67,11 +67,11 @@ class VAD(object):
         start = 0
         end = length-1
         for i in range(len(volume)):
-            if(volume[i]-thresh)>0:
+            if(volume[i]-threshhold)>0:
                 start = i
                 break
         while(end > start):
-            if (volume[end]-thresh)<0:
+            if (volume[end]-threshhold)<0:
                 break
             else:
                 end = end - 1

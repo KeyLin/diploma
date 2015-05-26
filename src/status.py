@@ -1,53 +1,42 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
-import RPi.GPIO
+import gpio
 import time
 
-R,G,B=15,18,14
+R,G,B=14,15,18
+Anode=23
 
-RPi.GPIO.setmode(RPi.GPIO.BCM)
+class RGB(object):
+	"""docstring for RGB"""
+	def __init__(self):
+		super(RGB, self).__init__()
 
-# RPi.GPIO.setup(R, RPi.GPIO.OUT)
-# RPi.GPIO.setup(G, RPi.GPIO.OUT)
-# RPi.GPIO.setup(B, RPi.GPIO.OUT)
+	def reset(anode,red,green,blue):
+		gpio.setup(anode,'out')
+		gpio.set(anode,0)
+		gpio.setup(red,'out')
+		gpio.set(red,0)
+		gpio.setup(green,'out')
+		gpio.set(green,0)
+		gpio.setup(blue,'out')
+		gpio.set(blue,0)
 
-# pwmR = RPi.GPIO.PWM(R, 70)
-# pwmG = RPi.GPIO.PWM(G, 70)
-# pwmB = RPi.GPIO.PWM(B, 70)
 
-# pwmR.start(0)
-# pwmG.start(0)
-# pwmB.start(0)
+	def set_color(color):
+		gpio.setup(Anode,'out')
+		gpio.set(Anode,1)
+		gpio.setup(R,'out')
+		gpio.set(R,1)
+		gpio.setup(G,'out')
+		gpio.set(G,1)
+		gpio.setup(B,'out')
+		gpio.set(B,1)
+		if color = 'red':
+			gpio.set(R,0)
+		elif color = 'green':
+			gpio.set(G,0)
+		elif color = 'blue':
+			gpio.set(B,0)
 
-# try:
-
-# 	t = 5
-# 	# while True:
-# 	# 红色灯全亮，蓝灯，绿灯全暗（红色）
-# 	pwmR.ChangeDutyCycle(0)
-# 	pwmG.ChangeDutyCycle(100)
-# 	pwmB.ChangeDutyCycle(100)
-# 	time.sleep(t)
-	
-# 	# 绿色灯全亮，红灯，蓝灯全暗（绿色）
-# 	pwmR.ChangeDutyCycle(100)
-# 	pwmG.ChangeDutyCycle(0)
-# 	pwmB.ChangeDutyCycle(100)
-# 	time.sleep(t)
-	
-# 	# 蓝色灯全亮，红灯，绿灯全暗（蓝色）
-# 	pwmR.ChangeDutyCycle(100)
-# 	pwmG.ChangeDutyCycle(100)
-# 	pwmB.ChangeDutyCycle(0)
-# 	time.sleep(t)
 		
-
-# except KeyboardInterrupt:
-# 	pass
-
-# pwmR.stop()
-# pwmG.stop()
-# pwmB.stop()
-
-RPi.GPIO.cleanup()

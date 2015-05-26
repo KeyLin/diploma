@@ -5,6 +5,7 @@ from sphinx import Pocket
 from baidu_voice import BaiduVoice
 from save_file import SaveFile
 from sender import Emit
+from status import RGB
 
 from ctypes import *
 
@@ -72,12 +73,14 @@ class Producer(threading.Thread):
                 # print 'hehe'
                 pocket.decode_buffer(audio_buf=buf)
                 if pocket.get_flag(flag='HEY'):
+                    RGB.set_color(color='blue')
                     start = True
                     count = 0
                     # time.sleep(0.5)
                     pocket.set_flag()
 
                 if count > RECORD_CONTROL:
+                    RGB.set_color(color='green')
                     start = False
                     count = 0
                     # time.sleep(0.5)
