@@ -66,7 +66,7 @@ class Producer(threading.Thread):
         count = 0
         frames = []
         # print "Producer started"
-        status.set_color(color='green')
+        status.set_color(color='blue')
         while not IS_EXIT:
             # print 'producing'
             # time.sleep(0.5)
@@ -83,7 +83,7 @@ class Producer(threading.Thread):
                     pocket.set_flag()
 
                 if count > RECORD_CONTROL:
-                    status.set_color(color='green')
+                    status.set_color(color='blue')
                     start = False
                     count = 0
                     # time.sleep(0.5)
@@ -97,7 +97,7 @@ class Producer(threading.Thread):
                     # (time.ctime(), self.getName(), file_name)
 
                 if start:
-                    status.set_color(color='blue')
+                    status.set_color(color='green')
                     frames.append(buf)
                     count = count + 1
                     print "saving to file ..."
