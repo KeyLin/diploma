@@ -66,11 +66,11 @@ class Producer(threading.Thread):
         count = 0
         frames = []
         # print "Producer started"
+        status.set_color(color='green')
         while not IS_EXIT:
             # print 'producing'
             # time.sleep(0.5)
             event.wait()
-            status.set_color(color='blue')
             # Read the first Chunk from the microphone
             buf = stream.read(CHUNK)
             if buf:
@@ -97,6 +97,7 @@ class Producer(threading.Thread):
                     # (time.ctime(), self.getName(), file_name)
 
                 if start:
+                    status.set_color(color='blue')
                     frames.append(buf)
                     count = count + 1
                     print "saving to file ..."
@@ -141,8 +142,6 @@ class Consumer(threading.Thread):
 
 def handler(signum, frame):
     global IS_EXIT
-    global event
-    event.set()
     IS_EXIT = True
     print "receive a signal %d, IS_EXIT = %d" % (signum, IS_EXIT)
 
@@ -174,6 +173,8 @@ def main():
     # consumer.join()
     while True:
         time.sleep(2)
+        if IS_EXIT:
+            event.set()
         if not consumer.isAlive() and not producer.isAlive():
             break
         if internet():
