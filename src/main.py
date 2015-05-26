@@ -70,20 +70,25 @@ class Producer(threading.Thread):
         while not IS_EXIT:
             # print 'producing'
             # time.sleep(0.5)
-            event.wait()
+            if not event.isSet():
+                print "no network access"
+                event.wait()
             # Read the first Chunk from the microphone
             buf = stream.read(CHUNK)
             if buf:
-                # print 'hehe'
-                pocket.decode_buffer(audio_buf=buf)
+                if not start:
+                    status.set_color(color='green')
+                    pocket.decode_buffer(audio_buf=buf)
+
                 if pocket.get_flag(flag='HEY'):
+                    status.set_color(color='blue')
                     start = True
                     count = 0
                     # time.sleep(0.5)
                     pocket.set_flag()
 
                 if count > RECORD_CONTROL:
-                    status.set_color(color='blue')
+                    status.set_color(color='green')
                     start = False
                     count = 0
                     # time.sleep(0.5)
@@ -97,7 +102,6 @@ class Producer(threading.Thread):
                     # (time.ctime(), self.getName(), file_name)
 
                 if start:
-                    status.set_color(color='green')
                     frames.append(buf)
                     count = count + 1
                     print "saving to file ..."
@@ -122,7 +126,9 @@ class Consumer(threading.Thread):
         # print IS_EXIT
         while not IS_EXIT:
             # print 'consuming'
-            event.wait()
+            if not event.isSet():
+                print "no network access"
+                event.wait()
             try:
                 file_name = self.data.get(True, 3)
                 print '%s: %s is consuming %s to the queue!' % (time.ctime(), self.getName(), file_name)
