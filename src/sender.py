@@ -38,7 +38,7 @@ class Emit(object):
         # print words
         channel.basic_publish(
             exchange=self.exchange, routing_key=route, body=content)
-        # print content
+        print content
         connection.close()
 
 if __name__ == '__main__':

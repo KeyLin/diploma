@@ -13,8 +13,9 @@ def action(body):
 
 
 def connect(ip, exchange_name, binding_keys):
-    connection = pika.BlockingConnection(pika.ConnectionParameters(
-        host=ip))
+    credentials = pika.PlainCredentials('test', 'test')
+    parameters =  pika.ConnectionParameters(ip, credentials=credentials)
+    connection = pika.BlockingConnection(parameters)
     channel = connection.channel()
 
     channel.exchange_declare(exchange=exchange_name,
@@ -46,7 +47,11 @@ def main():
     if not keys:
         print >> sys.stderr, "Usage: %s [binding_key]..." % (sys.argv[0],)
         sys.exit(1)
-    connect(ip='192.168.2.102',exchange_name='raspberry',binding_keys=keys)
+    connect(ip='192.168.2.100',exchange_name='raspberry',binding_keys=keys)
 
 if __name__ == '__main__':
     main()
+
+# sudo rabbitmqctl add_user test test
+# sudo rabbitmqctl set_user_tags test administrator
+# sudo rabbitmqctl set_permissions -p / test ".*" ".*" ".*"
