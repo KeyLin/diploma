@@ -57,6 +57,8 @@ class Pocket(object):
         self.in_speech_bf = True
 
         self.result = ["hehe"]
+
+        self.window = 50
         # print type(self.result)
 
     def get_flag(self, flag='yes'):
@@ -69,34 +71,38 @@ class Pocket(object):
         self.result = ["hehe"]
 
     def decode_buffer(self, audio_buf):
-
+        if self.window < 0:
+            self.decoder.end_utt()
+            self.decoder.start_utt()
+            self.window = 50
         self.decoder.process_raw(audio_buf, False, False)
-        try:
-            # If the decoder has partial results, display them in the screen.
-            if self.decoder.hyp().hypstr != '':
-                result = self.decoder.hyp().hypstr
-                print('Partial decoding result: '+ result)
-        except AttributeError:
-            pass
-        if self.decoder.get_in_speech():
-            pass
-        if self.decoder.get_in_speech() != self.in_speech_bf:
-            self.in_speech_bf = self.decoder.get_in_speech()
-            # When the speech ends:
-            if not self.in_speech_bf:
-                self.decoder.end_utt()
-                try:
-                    # Since the speech is ended, we can assume that we have
-                    # final results, then display them
-                    if self.decoder.hyp().hypstr != '':
-                        self.result = self.decoder.hyp().hypstr.split(" ")
-                        print(
-                            'Stream decoding result:' + ",".join(self.result))
+        return [seg.word for seg in decoder.seg()]
+        # try:
+        #     # If the decoder has partial results, display them in the screen.
+        #     if self.decoder.hyp().hypstr != '':
+        #         result = self.decoder.hyp().hypstr
+        #         print('Partial decoding result: '+ result)
+        # except AttributeError:
+        #     pass
+        # if self.decoder.get_in_speech():
+        #     pass
+        # if self.decoder.get_in_speech() != self.in_speech_bf:
+        #     self.in_speech_bf = self.decoder.get_in_speech()
+        #     # When the speech ends:
+        #     if not self.in_speech_bf:
+        #         self.decoder.end_utt()
+        #         try:
+        #             # Since the speech is ended, we can assume that we have
+        #             # final results, then display them
+        #             if self.decoder.hyp().hypstr != '':
+        #                 self.result = self.decoder.hyp().hypstr.split(" ")
+        #                 print(
+        #                     'Stream decoding result:' + ",".join(self.result))
 
-                except AttributeError:
-                    pass
-                # Say to the decoder, that a new "sentence" begins
-                self.decoder.start_utt()
+        #         except AttributeError:
+        #             pass
+        #         # Say to the decoder, that a new "sentence" begins
+        #         self.decoder.start_utt()
 
                 print "Listening: No audio"
 
