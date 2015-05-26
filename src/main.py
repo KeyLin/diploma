@@ -70,12 +70,12 @@ class Producer(threading.Thread):
         while not IS_EXIT:
             # print 'producing'
             # time.sleep(0.5)
-            if not event.isSet():
-                print "no network access"
-                event.wait()
+            # if not event.isSet():
+            #     print "no network access"
+            #     event.wait()
             # Read the first Chunk from the microphone
             buf = stream.read(CHUNK)
-            if buf:
+            if buf and event.isSet():
                 if not start:
                     status.set_color(color='green')
                     pocket.decode_buffer(audio_buf=buf)
@@ -126,9 +126,7 @@ class Consumer(threading.Thread):
         # print IS_EXIT
         while not IS_EXIT:
             # print 'consuming'
-            if not event.isSet():
-                print "no network access"
-                event.wait()
+            event.wait()
             try:
                 file_name = self.data.get(True, 3)
                 print '%s: %s is consuming %s to the queue!' % (time.ctime(), self.getName(), file_name)
@@ -186,6 +184,7 @@ def main():
         if internet():
             event.set()
         else:
+            print "no internet access"
             status.set_color(color='red')
             event.clear()
 
