@@ -32,11 +32,11 @@ class RGB(object):
 		gpio.set(G,1)
 		gpio.setup(B,'out')
 		gpio.set(B,1)
-		if color = 'red':
+		if color == 'red':
 			gpio.set(R,0)
-		elif color = 'green':
+		elif color == 'green':
 			gpio.set(G,0)
-		elif color = 'blue':
+		elif color == 'blue':
 			gpio.set(B,0)
 
 		
