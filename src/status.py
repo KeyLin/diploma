@@ -54,5 +54,5 @@ if __name__ == '__main__':
 	time.sleep(3)
 	set_color(color='blue')
 	time.sleep(3)
-	reset()
+	#reset()
 		
