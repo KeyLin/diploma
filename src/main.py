@@ -153,7 +153,7 @@ def handler(signum, frame):
 
 def internet():
     try:
-        response = urllib2.urlopen('https://www.baidu.com/', timeout=0.5)
+        response = urllib2.urlopen('https://www.baidu.com/', timeout=0.1)
         return True
     except urllib2.URLError as err:
         pass
@@ -189,6 +189,7 @@ def main():
         else:
             print "No internet access"
             status.set_color(color='red')
+            print "Red warning"
             event.clear()
 
     print 'All threads terminate!'
