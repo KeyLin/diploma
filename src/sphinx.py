@@ -81,7 +81,7 @@ class Pocket(object):
             self.window = 0
         self.decoder.process_raw(audio_buf, False, False)
         self.window += 1
-        print window
+        print self.window
         print('words: ', [seg.word for seg in self.decoder.seg()])
         self.result = [seg.word for seg in self.decoder.seg()]
         # try:
