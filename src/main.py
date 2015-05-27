@@ -153,7 +153,7 @@ def handler(signum, frame):
 
 def internet():
     try:
-        response = urllib2.urlopen('https://www.baidu.com/', timeout=0.1)
+        response = urllib2.urlopen('https://www.baidu.com/', timeout=1)
         return True
     except urllib2.URLError as err:
         pass
