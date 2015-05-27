@@ -64,7 +64,6 @@ class Producer(threading.Thread):
         else:
             wf = wave.open('./data/test.wav', 'rb')
 
-
         pocket = Pocket(configure='./src/config/config.ini')
         audio = SaveFile(SAMPLE_SIZE=pa.get_sample_size(pyaudio.paInt16))
         start = False
