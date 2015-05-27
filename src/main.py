@@ -188,9 +188,9 @@ def main():
             event.set()
         else:
             print "No internet access"
+            event.clear()
             status.set_color(color='red')
             print "Red warning"
-            event.clear()
 
     print 'All threads terminate!'
     status.reset()
