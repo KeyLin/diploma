@@ -39,7 +39,7 @@ class BaiduVoice(object):
             exit(0)
         return access_token
 
-    def get_text(self, file_format, audio_file):
+    def get_result(self, file_format, audio_file):
 
         # if os.path.isfile('audio_file') == False:
         # 	print audio_file
@@ -77,7 +77,7 @@ class BaiduVoice(object):
         re = re.json()
         result.append(re.get('err_no'))
         if re.get('err_no') == 0:
-            text = "".join(re.get('re')).encode('utf-8')
+            text = "".join(re.get('result')).encode('utf-8')
             result.append(text)
             # print text
             # return text
