@@ -104,7 +104,7 @@ class Producer(threading.Thread):
                 if start:
                     frames.append(buf)
                     count = count + 1
-                    print "saving to file ..."
+                    print "saving to file ..."+str(count)
 
         stream.stop_stream()
         stream.close()
