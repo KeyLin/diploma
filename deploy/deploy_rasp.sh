@@ -26,6 +26,7 @@ module[1]=requests
 module[2]=jieba
 module[3]=pika
 module[4]=pyalsaudio
+module[5]=RPi.GPIO
 
 function PackageInstall()
 {
