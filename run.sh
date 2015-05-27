@@ -1,4 +1,4 @@
 #!/bin/bash
 
-sudo bash init_gpio.sh
+sudo bash ./src/init_gpio.sh
 python ./src/main.py

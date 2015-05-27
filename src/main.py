@@ -60,7 +60,7 @@ class Producer(threading.Thread):
         stream = pa.open(format=pyaudio.paInt16, channels=1,
                          rate=RATE, input=True, frames_per_buffer=CHUNK)
         stream.start_stream()
-        pocket = Pocket(configure='./config/config.ini')
+        pocket = Pocket(configure='./src/config/config.ini')
         audio = SaveFile(SAMPLE_SIZE=pa.get_sample_size(pyaudio.paInt16))
         start = False
         count = 0
@@ -111,7 +111,7 @@ class Consumer(threading.Thread):
     def __init__(self, t_name, queue):
         threading.Thread.__init__(self, name=t_name)
         self.data = queue
-        self.recognition = BaiduVoice(configure='./config/config.ini')
+        self.recognition = BaiduVoice(configure='./src/config/config.ini')
         self.emit = Emit()
 
     def run(self):
