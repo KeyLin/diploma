@@ -68,12 +68,6 @@ class Producer(threading.Thread):
         # print "Producer started"
         status.set_color(color='blue')
         while not IS_EXIT:
-            # print 'producing'
-            # time.sleep(0.5)
-            # if not event.isSet():
-            #     print "no network access"
-            #     event.wait()
-            # Read the first Chunk from the microphone
             buf = stream.read(CHUNK)
             if buf and event.isSet():
                 if not start:

@@ -58,7 +58,8 @@ class Pocket(object):
 
         self.result = ["hehe"]
 
-        self.window = 50
+        self.window = 0
+        self.window_size = 60
         # print type(self.result)
 
     def get_flag(self, flag='yes'):
@@ -74,12 +75,13 @@ class Pocket(object):
         self.result = ["hehe"]
 
     def decode_buffer(self, audio_buf):
-        if self.window < 0:
+        if self.window > self.window_size:
             self.decoder.end_utt()
             self.decoder.start_utt()
-            self.window = 50
+            self.window = 0
         self.decoder.process_raw(audio_buf, False, False)
-        self.window -= 1
+        self.window += 1
+        print window
         print('words: ', [seg.word for seg in self.decoder.seg()])
         self.result = [seg.word for seg in self.decoder.seg()]
         # try:
