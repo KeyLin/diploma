@@ -62,7 +62,7 @@ class Producer(threading.Thread):
                              rate=RATE, input=True, frames_per_buffer=CHUNK)
             stream.start_stream()
         else:
-            wf = wave.open(./data/test.wav, 'rb')
+            wf = wave.open('./data/test.wav', 'rb')
 
 
         pocket = Pocket(configure='./src/config/config.ini')
