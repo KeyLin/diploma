@@ -66,6 +66,7 @@ class Pocket(object):
         if flag in self.result:
             self.decoder.end_utt()
             self.decoder.start_utt()
+            print('Listening')
             self.window = 50
             return True
         else:
@@ -78,6 +79,7 @@ class Pocket(object):
         if self.window > self.window_size:
             self.decoder.end_utt()
             self.decoder.start_utt()
+            print('Listening')
             self.window = 0
         self.decoder.process_raw(audio_buf, False, False)
         self.window += 1
