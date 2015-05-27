@@ -84,7 +84,7 @@ class Pocket(object):
         self.decoder.process_raw(audio_buf, False, False)
         self.window += 1
         # print self.window
-        # print('words: ', [seg.word for seg in self.decoder.seg()])
+        print('words: ', [seg.word for seg in self.decoder.seg()])
         self.result = [seg.word for seg in self.decoder.seg()]
         # try:
         #     # If the decoder has partial results, display them in the screen.
