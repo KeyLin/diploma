@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # coding=utf8
+
 import pika
 
 route_dic = {u'音乐': 'music.', u'备忘录': 'mail.'}

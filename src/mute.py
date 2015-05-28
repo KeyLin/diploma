@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+#coding:utf8
+
 import math
 import numpy as np
 import wave

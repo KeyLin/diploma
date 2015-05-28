@@ -21,7 +21,6 @@ package[1]=swig
 # package[6]=python-pocketsphinx
 # python-pocketsphinx-dbg 
 
-# package[7]=pocketsphinx-lm-zh-hans-gigatdt 
 module[0]=pocketsphinx
 
 function PackageInstall()

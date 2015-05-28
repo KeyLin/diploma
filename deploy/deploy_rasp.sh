@@ -66,12 +66,6 @@ for ((i=0;i<${#module[@]};i++));
 
 #notice:jack* may cause audio record problem.Just remove jack*.
 
-#myFile1="./speex-1.2rc1.tar.gz"
-#if [ ! -f "$myFile1" ]; then  
-#	wget http://downloads.xiph.org/releases/speex/speex-1.2rc1.tar.gz
-#	tar -xzvf speex-1.2rc1.tar.gz  
-#fi
-
 #rm -rf ../voiceRecognition
 apt-get purge -y bluez-alsa
 
