@@ -41,7 +41,7 @@ asound.snd_lib_error_set_handler(c_error_handler)
 
 CHUNK = 1024
 RATE = 16000
-RECORD_SECONDS = 5
+RECORD_SECONDS = 6
 RECORD_CONTROL = int(RATE / CHUNK * RECORD_SECONDS)
 FILE_PATH = './data/'
 IS_REMOVE = False
@@ -77,7 +77,7 @@ class Producer(threading.Thread):
             else:
                 buf = wf.readframes(CHUNK)
 
-            print len(buf)
+            #print len(buf)
 
             if buf and event.isSet():
                 if not start:
@@ -135,7 +135,7 @@ class Consumer(threading.Thread):
                 print '%s: %s is consuming %s to the queue!' % (time.ctime(), self.getName(), file_name)
                 message = self.recognition.get_result(
                     file_format='wav', audio_file=FILE_PATH + file_name)
-                # print message
+                print message[1]
                 # print 'emitting'
                 if(message[0] == 0):
                     words = list(jieba.cut(message, cut_all=False))
