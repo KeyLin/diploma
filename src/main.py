@@ -5,7 +5,7 @@ from sphinx import Pocket
 from baidu_voice import BaiduVoice
 from save_file import SaveFile
 from sender import Emit
-import status
+import  status
 
 from ctypes import *
 
@@ -70,27 +70,29 @@ class Producer(threading.Thread):
         count = 0
         frames = []
         # print "Producer started"
-        status.set_color(color='blue')
+        # status.set_color(color='blue')
         while not IS_EXIT:
             if not IS_TEST:
                 buf = stream.read(CHUNK)
             else:
                 buf = wf.readframes(CHUNK)
 
+            print len(buf)
+
             if buf and event.isSet():
                 if not start:
-                    status.set_color(color='green')
+                    # status.set_color(color='green')
                     pocket.decode_buffer(audio_buf=buf)
 
                 if pocket.get_flag(flag='HEY'):
-                    status.set_color(color='blue')
+                    # status.set_color(color='blue')
                     start = True
                     count = 0
                     # time.sleep(0.5)
                     pocket.set_flag()
 
                 if count > RECORD_CONTROL:
-                    status.set_color(color='green')
+                    # status.set_color(color='green')
                     start = False
                     count = 0
                     # time.sleep(0.5)
@@ -189,11 +191,11 @@ def main():
         else:
             print "No internet access"
             event.clear()
-            status.set_color(color='red')
+            # status.set_color(color='red')
             print "Red warning"
 
     print 'All threads terminate!'
-    status.reset()
+    # status.reset()
 
 
 if __name__ == '__main__':
