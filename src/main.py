@@ -109,8 +109,11 @@ class Producer(threading.Thread):
                     print "saving to file ..."+str(count)
 
         stream.stop_stream()
+        print('stream stoped')
         stream.close()
+        print('stream closed')
         pa.terminate()
+        print('pa terminate')
         print "%s: %s finished!" % (time.ctime(), self.getName())
 
 
