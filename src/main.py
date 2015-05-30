@@ -81,18 +81,18 @@ class Producer(threading.Thread):
 
             if buf and event.isSet():
                 if not start:
-                    # status.set_color(color='green')
+                    status.set_color(color='green')
                     pocket.decode_buffer(audio_buf=buf)
 
                 if pocket.get_flag(flag='HEY'):
-                    # status.set_color(color='blue')
+                    status.set_color(color='blue')
                     start = True
                     count = 0
                     # time.sleep(0.5)
                     pocket.set_flag()
 
                 if count > RECORD_CONTROL:
-                    # status.set_color(color='green')
+                    status.set_color(color='green')
                     start = False
                     count = 0
                     # time.sleep(0.5)
@@ -191,7 +191,7 @@ def main():
         else:
             print "No internet access"
             event.clear()
-            # status.set_color(color='red')
+            status.set_color(color='red')
             print "Red warning"
 
     print 'All threads terminate!'
