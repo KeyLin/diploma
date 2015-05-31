@@ -3,7 +3,7 @@
 
 import pika
 
-route_dic = {u'音乐': 'music.', u'备忘录': 'mail.'}
+route_dic = {u'音乐': 'music.', u'备忘录': 'memo.'}
 
 
 class Emit(object):
@@ -44,5 +44,5 @@ class Emit(object):
 
 if __name__ == '__main__':
     test = Emit()
-    test.emit_message(u'播放音乐', [u'音乐', u'备忘录'])
-    test.emit_message(u'打开备忘录', [u'备忘录', u'音乐'])
+    test.emit_message(u'播放音乐', [u'播放',u'音乐'])
+    test.emit_message(u'打开备忘录', [u'打开',u'备忘录'])

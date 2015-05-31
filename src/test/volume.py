@@ -8,7 +8,7 @@ def calVolume(waveData, frameSize, overLap):
     wlen = len(waveData)
     step = frameSize - overLap
     frameNum = int(math.ceil(wlen * 1.0 / step))
-    volume = np.zeros((frameNum, 1))
+    volume = np.zeros(frameNum)
     for i in range(frameNum):
         curFrame = waveData[
             np.arange(i * step, min(i * step + frameSize, wlen))]

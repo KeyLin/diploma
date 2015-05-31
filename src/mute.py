@@ -19,7 +19,7 @@ class VAD(object):
         wlen = len(wave_data)
         step = self.frame_size - self.over_lap
         frame_num = int(math.ceil(wlen*1.0/step))
-        volume = np.zeros((frame_num,1))
+        volume = np.zeros(frame_num)
         for i in range(frame_num):
             cur_frame = wave_data[np.arange(i*step,min(i*step+self.frame_size,wlen))]
             cur_frame = cur_frame - np.median(cur_frame) # zero-justified
@@ -33,7 +33,7 @@ class VAD(object):
         wlen = len(wave_data)
         step = self.frame_size - self.over_lap
         frame_num = int(math.ceil(wlen*1.0/step))
-        volume = np.zeros((frame_num,1))
+        volume = np.zeros(frame_num)
         for i in range(frame_num):
             cur_frame = wave_data[np.arange(i*step,min(i*step+self.frame_size,wlen))]
             cur_frame = cur_frame - np.mean(cur_frame) # zero-justified

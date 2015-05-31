@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import volume as vp
 import re
+from collections import Counter
 
 def findIndex1(vol,thres):
     length = len(vol)
@@ -36,7 +37,25 @@ def findIndex2(vol,thres):
     index = np.array(index)
     return index
 
-fw = wave.open('../data/cmd.wav','r')
+def findIndex3(vol,thres):
+    length = len(vol)
+    print length
+    index = [0]
+    section = 30
+    for i in range(0,length-1,section):
+        temp = 0
+        for j in range(section):
+            if i+j < length:
+                temp += (vol[i+j]-thres)
+        if temp > 0:
+            #print temp
+            index.append(i)
+            index.append(i+section)
+    print index
+    index = np.array(index)
+    return index
+
+fw = wave.open('../data/cmd_03.wav','r')
 params = fw.getparams()
 nchannels, sampwidth, framerate, nframes = params[:4]
 strData = fw.readframes(nframes)
@@ -47,15 +66,22 @@ fw.close()
 frameSize = 256
 overLap = 128
 vol = vp.calVolume(waveData,frameSize,overLap)
+
+vol1 = []
+for i in range(len(vol)-1):
+    vol1.append("%.6f" % vol[i])
+
+threshold2 = float(Counter(vol1).most_common(1)[0][0])
+#print threshold2
 threshold1 = max(vol)*0.14
-threshold2 = min(vol)*10.0
+#threshold2 = min(vol)*1.0
 threshold3 = max(vol)*0.01+min(vol)*5.0
 
 time = np.arange(0,nframes) * (1.0/framerate)
 frame = np.arange(0,len(vol)) * (nframes*1.0/len(vol)/framerate)
-index1 = findIndex1(vol,threshold1)*(nframes*1.0/len(vol)/framerate)
-index2 = findIndex1(vol,threshold2)*(nframes*1.0/len(vol)/framerate)
-index3 = findIndex1(vol,threshold3)*(nframes*1.0/len(vol)/framerate)
+index1 = findIndex3(vol,threshold1)*(nframes*1.0/len(vol)/framerate)
+index2 = findIndex3(vol,threshold2)*(nframes*1.0/len(vol)/framerate)
+index3 = findIndex3(vol,threshold3)*(nframes*1.0/len(vol)/framerate)
 end = nframes * (1.0/framerate)
 print nframes
 
@@ -88,8 +114,8 @@ wf.writeframes(b''.join(frames))
 
 plt.subplot(211)
 plt.plot(time,waveData,color="black")
-plt.plot([index1,index1],[-2,2],'-r')
-plt.plot([index2,index2],[-2,2],'-g')
+#plt.plot([index1,index1],[-1,1],'-r')
+#plt.plot([index2,index2],[-2,2],'-g')
 plt.plot([index3,index3],[-2,2],'-b')
 plt.ylabel('Amplitude')
 
