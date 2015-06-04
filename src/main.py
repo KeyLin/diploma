@@ -44,7 +44,7 @@ RATE = 16000
 RECORD_SECONDS = 6
 RECORD_CONTROL = int(RATE / CHUNK * RECORD_SECONDS)
 FILE_PATH = './data/'
-IS_REMOVE = False
+IS_REMOVE = True
 IS_EXIT = False
 IS_TEST = False
 
@@ -85,7 +85,7 @@ class Producer(threading.Thread):
                     pocket.decode_buffer(audio_buf=buf)
 
                 if pocket.get_flag(flag='HEY'):
-                    status.set_color(color='blue')
+                    # status.set_color(color='blue')
                     start = True
                     count = 0
                     # time.sleep(0.5)
@@ -139,10 +139,11 @@ class Consumer(threading.Thread):
                 message = self.recognition.get_result(
                     file_format='wav', audio_file=FILE_PATH + file_name)
                 print message[1]
-                # print 'emitting'
+                #print message[0]
                 if(message[0] == 0):
-                    words = list(jieba.cut(message, cut_all=False))
-                    self.emit.emit_message(message, words)
+                    words = list(jieba.cut(message[1], cut_all=False))
+                    #print words
+                    self.emit.emit_message(message[1], words)
                 if IS_REMOVE:
                     os.remove(FILE_PATH + file_name)
             except Exception, e:

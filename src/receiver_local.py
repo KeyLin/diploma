@@ -55,7 +55,7 @@ def main():
     if not keys:
         print >> sys.stderr, "Usage: %s [binding_key]..." % (sys.argv[0],)
         sys.exit(1)
-    connect(ip='192.168.2.100',exchange_name='raspberry',binding_keys=keys)
+    connect(ip='localhost',exchange_name='raspberry',binding_keys=keys)
 
 if __name__ == '__main__':
     main()

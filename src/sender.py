@@ -36,7 +36,7 @@ class Emit(object):
         channel.exchange_declare(exchange=self.exchange, type=self.type)
         content = message + ',' + ','.join(words)
         # print type(content)
-        # print words
+        print words
         channel.basic_publish(
             exchange=self.exchange, routing_key=route, body=content)
         print content
